@@ -7,6 +7,7 @@ import { shallow } from 'enzyme';
 import Goal from '../Goal';
 import { ListItem } from 'material-ui/List';
 import LinearProgress from 'material-ui/LinearProgress';
+import FlatButton from 'material-ui/FlatButton';
 
 describe('Goal', () => {
   let props;
@@ -73,6 +74,28 @@ describe('Goal', () => {
       it('should receive a `value` prop', () => {
         expect(linearProgress.props().value).toBeDefined();
       });
+    });
+  });
+
+  it('should always render a `FlatButton`', () => {
+    expect(goal().find(FlatButton).length).toBe(1);
+  });
+  describe('the rendered `FlatButton`', () => {
+    let flatBtn;
+    beforeEach(() => {
+      flatBtn = goal().find(FlatButton);
+    });
+    it('should receive a `label` prop', () => {
+      expect(flatBtn.props().label).toBeDefined();
+    });
+    it('should receive a `icon` prop', () => {
+      expect(flatBtn.props().icon).toBeDefined();
+    });
+    it('should receive a `onClick` prop', () => {
+      expect(flatBtn.props().onClick).toBeDefined();
+    });
+    it('should receive a `fullWidth` prop', () => {
+      expect(flatBtn.props().fullWidth).toBeDefined();
     });
   });
 
