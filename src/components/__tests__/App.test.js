@@ -8,7 +8,7 @@ import { shallow } from 'enzyme';
 import App from '../App';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
-import Paper from 'material-ui/Paper';
+import GoalsList from '../GoalsList';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 
 describe('App', () => {
@@ -21,13 +21,21 @@ describe('App', () => {
   }
 
   beforeEach(() => {
-    props = {};
+    props = {
+      mockState: {
+        goalsById: {},
+        goals: [],
+        sortedBy: '',
+        goalsCompleted: [],
+        quoteOfTheDay: ''
+      }
+    };
     mountedApp = undefined;
   });
 
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<App />, div);
+    ReactDOM.render(<App {...props} />, div);
     ReactDOM.unmountComponentAtNode(div);
   });
 
@@ -61,8 +69,17 @@ describe('App', () => {
     });
   });
 
-  it('should always render a `Paper`', () => {
-    expect(app().find(Paper).length).toBe(1);
+  it('should always render a `GoalsList`', () => {
+    expect(app().find(GoalsList).length).toBe(1);
+  });
+  describe('the rendered `GoalsList`', () => {
+    let goalsList;
+    beforeEach(() => {
+      goalsList = app().find(GoalsList);
+    });
+    it('should receive a `goalsById` prop', () => {
+      expect(goalsList.props().goalsById).toBeDefined();
+    });
   });
 
   it('should always render a `FloatingActionButton`', () => {
