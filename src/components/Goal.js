@@ -11,8 +11,21 @@ class Goal extends Component {
     goal: PropTypes.object.isRequired
   };
 
+  state = {
+    progress: 0
+  }
+
+  componentDidMount() {
+    const { steps } = this.props.goal;
+    if (steps.length) {
+      const progress = steps.filter(step => step.completed).length / steps.length * 100;
+      this.setState({ progress });
+    }
+  }
+
   render() {
-    const { goal } = this.props
+    const { goal } = this.props;
+    const { progress } = this.state;
     return (
       <div>
         <ListItem
@@ -20,7 +33,7 @@ class Goal extends Component {
           onClick={() => alert('Expand me')}
           primaryText={goal.label}
         />
-        <LinearProgress mode='determinate' />
+        <LinearProgress mode='determinate' value={progress} />
         <FlatButton
           label='add a step'
           icon={<Add />}
@@ -33,4 +46,3 @@ class Goal extends Component {
 }
 
 export default Goal;
-/*value={this.calcPerc(goal.steps)}*/

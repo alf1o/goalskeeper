@@ -13,20 +13,24 @@ describe('Goal', () => {
   let props;
   let mountedGoal;
 
-  function goal() {
+  function mountGoal() {
     if (!mountedGoal) mountedGoal = shallow(<Goal {...props} />);
     return mountedGoal;
   }
 
   beforeEach(() => {
     props = {
-      goal: {}
+      goal: {
+        id: 'goal_0',
+        label: 'Test goal 0',
+        steps: [{ completed: true }, { completed: true }]
+      }
     };
     mountedGoal = undefined;
   });
 
   it('it should always render a `div`', () => {
-    expect(goal().find('div').length).toBeGreaterThan(0);
+    expect(mountGoal().find('div').length).toBeGreaterThan(0);
   });
   describe('the rendered `div`', () => {
     let div;
@@ -38,7 +42,7 @@ describe('Goal', () => {
           steps: [{ completed: true }, { completed: true }]
         }
       };
-      div = goal().find('div').first();
+      div = mountGoal().find('div').first();
     });
 
     it('should render a `ListItem`', () => {
@@ -78,12 +82,12 @@ describe('Goal', () => {
   });
 
   it('should always render a `FlatButton`', () => {
-    expect(goal().find(FlatButton).length).toBe(1);
+    expect(mountGoal().find(FlatButton).length).toBe(1);
   });
   describe('the rendered `FlatButton`', () => {
     let flatBtn;
     beforeEach(() => {
-      flatBtn = goal().find(FlatButton);
+      flatBtn = mountGoal().find(FlatButton);
     });
     it('should receive a `label` prop', () => {
       expect(flatBtn.props().label).toBeDefined();
@@ -97,6 +101,12 @@ describe('Goal', () => {
     it('should receive a `fullWidth` prop', () => {
       expect(flatBtn.props().fullWidth).toBeDefined();
     });
+  });
+
+  it('should call `componentDidMount` once', () => {
+    const componentDidMountSpy = jest.spyOn(Goal.prototype, 'componentDidMount');
+    mountGoal();
+    expect(componentDidMountSpy.mock.calls.length).toBe(1);
   });
 
 });
