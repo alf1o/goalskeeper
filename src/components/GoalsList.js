@@ -5,6 +5,7 @@ import { List, ListItem } from 'material-ui/List';
 import FlatButton from 'material-ui/FlatButton';
 import Add from 'material-ui/svg-icons/content/add';
 import ArrowDropDown from 'material-ui/svg-icons/navigation/arrow-drop-down';
+import LinearProgress from 'material-ui/LinearProgress';
 // import DateRange from 'material-ui/svg-icons/action/date-range';
 
 class GoalsList extends Component {
@@ -12,18 +13,24 @@ class GoalsList extends Component {
     goalsById: PropTypes.object.isRequired
   };
 
+  calcPerc = steps => (steps.length
+    ? steps.filter(step => step.completed).length / steps.length * 100
+    : 0);
+
   render() {
     const { goalsById } = this.props;
     return (
       <Paper>
         <List>
           {Object.values(goalsById).map(goal => (
-            <ListItem
-              key={goal.id}
-              leftIcon={<ArrowDropDown />}
-              onClick={() => alert('Expand me')}
-              primaryText={goal.label}
-            />
+            <div key={goal.id}>
+              <ListItem
+                leftIcon={<ArrowDropDown />}
+                onClick={() => alert('Expand me')}
+                primaryText={goal.label}
+              />
+              <LinearProgress mode='determinate' value={this.calcPerc(goal.steps)} />
+            </div>
           ))}
         </List>
         <FlatButton
