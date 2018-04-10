@@ -45,6 +45,21 @@ describe('App', () => {
   it('should always render an `AppBar`', () => {
     expect(app().find(AppBar).length).toBe(1);
   });
+  describe('the rendered `AppBar`', () => {
+    let appBar;
+    beforeEach(() => {
+      appBar = app().find(AppBar);
+    });
+    it('should receive an `onLeftIconButtonClick` prop', () => {
+      expect(appBar.props().onLeftIconButtonClick).toBeDefined();
+    });
+    it('should receive a `title` prop', () => {
+      expect(appBar.props().title).toBeDefined();
+    });
+    it('should receive an `onTitleClick` prop', () => {
+      expect(appBar.props().onTitleClick).toBeDefined();
+    });
+  });
 
   it('should always render a `Paper`', () => {
     expect(app().find(Paper).length).toBe(1);
@@ -52,6 +67,15 @@ describe('App', () => {
 
   it('should always render a `FloatingActionButton`', () => {
     expect(app().find(FloatingActionButton).length).toBe(1);
+  });
+  describe('the rendered `FloatingActionButton`', () => {
+    let floatActBtn;
+    beforeEach(() => {
+      floatActBtn = app().find(FloatingActionButton);
+    });
+    it('should receive an `onClick` prop', () => {
+      expect(floatActBtn.props().onClick).toBeDefined();
+    });
   });
 
 });

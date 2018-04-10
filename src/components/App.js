@@ -12,13 +12,20 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div>
-          <AppBar />
+          <AppBar
+            onLeftIconButtonClick={() => alert('Open drawer')}
+            title='Goal Keeper'
+            onTitleClick={() => alert('Route home')}
+          />
           <Paper />
-          <FloatingActionButton style={{
-            position: 'absolute',
-            bottom: 15,
-            right: 15
-          }}>
+          <FloatingActionButton
+            style={{
+              position: 'absolute',
+              bottom: 15,
+              right: 15
+            }}
+            onClick={() => alert('Add a new goal')}
+          >
             <ContentAdd />
           </FloatingActionButton>
         </div>
