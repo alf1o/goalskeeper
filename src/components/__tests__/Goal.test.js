@@ -78,6 +78,11 @@ describe('Goal', () => {
       it('should receive a `value` prop', () => {
         expect(linearProgress.props().value).toBeDefined();
       });
+      describe('the `value` prop', () => {
+        it('should equal `state.progress`', () => {
+          expect(linearProgress.props().value).toEqual(mountGoal().state().progress);
+        });
+      });
     });
   });
 
