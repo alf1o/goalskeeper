@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
-import { List, ListItem } from 'material-ui/List';
+import { List } from 'material-ui/List';
+import Goal from './Goal';
 import FlatButton from 'material-ui/FlatButton';
 import Add from 'material-ui/svg-icons/content/add';
-import ArrowDropDown from 'material-ui/svg-icons/navigation/arrow-drop-down';
-import LinearProgress from 'material-ui/LinearProgress';
 // import DateRange from 'material-ui/svg-icons/action/date-range';
 
 class GoalsList extends Component {
@@ -23,14 +22,10 @@ class GoalsList extends Component {
       <Paper>
         <List>
           {Object.values(goalsById).map(goal => (
-            <div key={goal.id}>
-              <ListItem
-                leftIcon={<ArrowDropDown />}
-                onClick={() => alert('Expand me')}
-                primaryText={goal.label}
-              />
-              <LinearProgress mode='determinate' value={this.calcPerc(goal.steps)} />
-            </div>
+            <Goal
+              key={goal.id}
+              goal={goal}
+            />
           ))}
         </List>
         <FlatButton

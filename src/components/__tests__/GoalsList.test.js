@@ -6,8 +6,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import GoalsList from '../GoalsList';
 import Paper from 'material-ui/Paper';
-import { List, ListItem } from 'material-ui/List';
-import LinearProgress from 'material-ui/LinearProgress';
+import { List } from 'material-ui/List';
+import Goal from '../Goal';
 import FlatButton from 'material-ui/FlatButton';
 
 describe('GoalsList', () => {
@@ -39,10 +39,10 @@ describe('GoalsList', () => {
     expect(goalsList().find(List).length).toBe(1);
   });
   describe('the rendered `List`', () => {
-    describe('should display a `div` for each element of `goalsById`', () => {
+    describe('should display a `Goal` for each element in `goalsById`', () => {
       it('should display 0 elements for an empty object', () => {
-        const divs = goalsList().find(List).find('div');
-        expect(divs.length).toBe(0);
+        const goals = goalsList().find(List).find(Goal);
+        expect(goals.length).toBe(0);
       });
       it('should display 1 element for an object of 1 element', () => {
         props = {
@@ -53,8 +53,8 @@ describe('GoalsList', () => {
             }
           }
         };
-        const divs = goalsList().find(List).find('div');
-        expect(divs.length).toBe(1);
+        const goals = goalsList().find(List).find(Goal);
+        expect(goals.length).toBe(1);
       });
       it('should display 2 elements for an object of 2 elements', () => {
         props = {
@@ -69,64 +69,8 @@ describe('GoalsList', () => {
             }
           }
         };
-        const divs = goalsList().find(List).find('div');
-        expect(divs.length).toBe(2);
-      });
-
-      describe('the rendered `div`', () => {
-        let div;
-        beforeEach(() => {
-          props = {
-            goalsById: {
-              'goal_0': {
-                id: 'goal_0',
-                label: 'Test goal 0',
-                steps: [{ completed: true }, { completed: true }]
-              },
-              'goal_1': {
-                id: 'goal_1',
-                label: 'Test goal 1',
-                steps: [{ completed: true }, { completed: false }]
-              }
-            }
-          };
-          div = goalsList().find(List).find('div').first();
-        });
-
-        it('should render a `ListItem`', () => {
-          expect(div.find(ListItem).length).toBe(1);
-        });
-        describe('the rendered `ListItem`', () => {
-          let listItem;
-          beforeEach(() => {
-            listItem = div.find(ListItem);
-          });
-          it('should receive a `leftIcon` prop', () => {
-            expect(listItem.props().leftIcon).toBeDefined();
-          });
-          it('should receive a `onClick` prop', () => {
-            expect(listItem.props().onClick).toBeDefined();
-          });
-          it('should receive a `primaryText` prop', () => {
-            expect(listItem.props().primaryText).toBeDefined();
-          });
-        });
-
-        it('should render a `LinearProgress`', () => {
-          expect(div.find(LinearProgress).length).toBe(1);
-        });
-        describe('the rendered `LinearProgress`', () => {
-          let linearProgress;
-          beforeEach(() => {
-            linearProgress = div.find(LinearProgress);
-          });
-          it('should receive a `mode` prop', () => {
-            expect(linearProgress.props().mode).toBeDefined();
-          });
-          it('should receive a `value` prop', () => {
-            expect(linearProgress.props().value).toBeDefined();
-          });
-        });
+        const goals = goalsList().find(List).find(Goal);
+        expect(goals.length).toBe(2);
       });
     });
   });
