@@ -2,19 +2,26 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ListItem } from 'material-ui/List';
 import ArrowDropDown from 'material-ui/svg-icons/navigation/arrow-drop-down';
+import GoalInfo from './GoalInfo';
 import LinearProgress from 'material-ui/LinearProgress';
-import FlatButton from 'material-ui/FlatButton';
-import Add from 'material-ui/svg-icons/content/add';
 
 class Goal extends Component {
   static propTypes = {
     goal: PropTypes.object.isRequired
   };
 
-  state = {
-    expanded: false,
-    progress: 0
-  };
+  constructor() {
+    super();
+    this.state = {
+      expanded: false,
+      progress: 0
+    };
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    this.setState(oldState => ({ expanded: !oldState.expanded }));
+  }
 
   componentDidMount() {
     const { steps } = this.props.goal;
@@ -31,16 +38,12 @@ class Goal extends Component {
       <div>
         <ListItem
           leftIcon={<ArrowDropDown />}
-          onClick={() => alert('Expand me')}
+          onClick={this.handleClick}
           primaryText={goal.label}
+          secondaryText={'Due at: ' + goal.dueDate}
         />
+        {expanded && <GoalInfo />}
         <LinearProgress mode='determinate' value={progress} />
-        <FlatButton
-          label='add a step'
-          icon={<Add />}
-          onClick={() => alert('Add a step')}
-          fullWidth={true}
-        />
       </div>
     );
   }

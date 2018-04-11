@@ -8,6 +8,7 @@ import Goal from '../Goal';
 import { ListItem } from 'material-ui/List';
 import LinearProgress from 'material-ui/LinearProgress';
 import FlatButton from 'material-ui/FlatButton';
+import GoalInfo from '../GoalInfo';
 
 describe('Goal', () => {
   let props;
@@ -39,7 +40,8 @@ describe('Goal', () => {
         goal: {
           id: 'goal_0',
           label: 'Test goal 0',
-          steps: [{ completed: true }, { completed: true }]
+          steps: [{ completed: true }, { completed: true }],
+          dueDate: '13/04/2018'
         }
       };
       div = mountGoal().find('div').first();
@@ -62,6 +64,9 @@ describe('Goal', () => {
       it('should receive a `primaryText` prop', () => {
         expect(listItem.props().primaryText).toBeDefined();
       });
+      it('should receive a `secondaryText` prop', () => {
+        expect(listItem.props().secondaryText).toBeDefined();
+      });
     });
 
     it('should render a `LinearProgress`', () => {
@@ -83,28 +88,6 @@ describe('Goal', () => {
           expect(linearProgress.props().value).toEqual(mountGoal().state().progress);
         });
       });
-    });
-  });
-
-  it('should always render a `FlatButton`', () => {
-    expect(mountGoal().find(FlatButton).length).toBe(1);
-  });
-  describe('the rendered `FlatButton`', () => {
-    let flatBtn;
-    beforeEach(() => {
-      flatBtn = mountGoal().find(FlatButton);
-    });
-    it('should receive a `label` prop', () => {
-      expect(flatBtn.props().label).toBeDefined();
-    });
-    it('should receive a `icon` prop', () => {
-      expect(flatBtn.props().icon).toBeDefined();
-    });
-    it('should receive a `onClick` prop', () => {
-      expect(flatBtn.props().onClick).toBeDefined();
-    });
-    it('should receive a `fullWidth` prop', () => {
-      expect(flatBtn.props().fullWidth).toBeDefined();
     });
   });
 
@@ -131,8 +114,43 @@ describe('Goal', () => {
     expect(mountGoal().state().expanded).toBeDefined();
   });
 
-  // describe('when `state.expanded` is `false`', () => {
-  //
-  // });
+  describe('when `state.expanded` is `false`', () => {
+    it('should not render a `GoalInfo`', () => {
+      expect(mountGoal().find(GoalInfo).length).toBe(0);
+    });
+  });
+
+  it('should have an `handleClick` method', () => {
+    expect(Goal.prototype.handleClick).toBeDefined();
+  });
+  describe('`handleClick`', () => {
+    let handleClickSpy;
+    beforeEach(() => {
+      handleClickSpy = jest.spyOn(Goal.prototype, 'handleClick');
+    });
+    afterEach(() => {
+      handleClickSpy.mockClear();
+    });
+    it('should be called on `ListItem` click', () => {
+      mountGoal().find(ListItem).simulate('click');
+      expect(handleClickSpy.mock.calls.length).toBe(1);
+    });
+    it('should toggle `state.expanded`', () => {
+      expect(mountGoal().state().expanded).toBe(false);
+      mountGoal().find(ListItem).simulate('click');
+      expect(mountGoal().state().expanded).toBe(true);
+      mountGoal().find(ListItem).simulate('click');
+      expect(mountGoal().state().expanded).toBe(false);
+    });
+  });
+
+  describe('when `state.expanded` is `true`', () => {
+    beforeEach(() => {
+      mountGoal().setState({ expanded: true });
+    });
+    it('should render a `GoalInfo`', () => {
+      expect(mountGoal().find(GoalInfo).length).toBe(1);
+    });
+  });
 
 });
