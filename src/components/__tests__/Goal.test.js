@@ -114,4 +114,17 @@ describe('Goal', () => {
     expect(componentDidMountSpy.mock.calls.length).toBe(1);
   });
 
+  it('should update `state` correctly when `goal.steps` is not empty', () => {
+    props = {
+      goal: {
+        id: 'goal_0',
+        label: 'Test goal 0',
+        steps: [{ completed: true }, { completed: true }, { completed: false}]
+      }
+    };
+    const { steps } = props.goal;
+    const actual = steps.filter(step => step.completed).length / steps.length * 100;
+    expect(mountGoal().state().progress).toBeCloseTo(actual);
+  });
+
 });

@@ -14,7 +14,7 @@ class GoalsList extends Component {
     const { goalsById } = this.props;
     return (
       <Paper>
-        <List>
+        <List style={{marginBottom: 70}}>
           {Object.values(goalsById).map(goal => (
             <Goal
               key={goal.id}
