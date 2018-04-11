@@ -42,7 +42,7 @@ class Goal extends Component {
           primaryText={goal.label}
           secondaryText={'Due at: ' + goal.dueDate}
         />
-        {expanded && <GoalInfo />}
+        {expanded && <GoalInfo steps={goal.steps} />}
         <LinearProgress mode='determinate' value={progress} />
       </div>
     );

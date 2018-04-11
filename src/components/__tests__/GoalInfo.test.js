@@ -6,6 +6,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import GoalInfo from '../GoalInfo';
 import Paper from 'material-ui/Paper';
+import { List } from 'material-ui/List';
 import FlatButton from 'material-ui/FlatButton';
 
 describe('GoalInfo', () => {
@@ -18,7 +19,9 @@ describe('GoalInfo', () => {
   }
 
   beforeEach(() => {
-    props = {};
+    props = {
+      steps: [{ completed: true }, { completed: false }]
+    };
     mountedGoalInfo = undefined;
   });
 
@@ -30,6 +33,10 @@ describe('GoalInfo', () => {
       const paper = goalInfo().find(Paper);
       expect(paper.children()).toEqual(goalInfo().children());
     });
+  });
+
+  it('should always render a `List`', () => {
+    expect(goalInfo().find(List).length).toBe(1);
   });
 
   it('should always render a `FlatButton`', () => {

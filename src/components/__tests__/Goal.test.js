@@ -151,6 +151,10 @@ describe('Goal', () => {
     it('should render a `GoalInfo`', () => {
       expect(mountGoal().find(GoalInfo).length).toBe(1);
     });
+    it('should pass `goal.steps` as prop to the rendered `GoalInfo`', () => {
+      const goalInfo = mountGoal().find(GoalInfo);
+      expect(goalInfo.props().steps).toBeDefined();
+    });
   });
 
 });
