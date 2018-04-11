@@ -7,6 +7,7 @@ import { shallow } from 'enzyme';
 import GoalInfo from '../GoalInfo';
 import Paper from 'material-ui/Paper';
 import { List } from 'material-ui/List';
+import Step from '../Step';
 import FlatButton from 'material-ui/FlatButton';
 
 describe('GoalInfo', () => {
@@ -20,7 +21,7 @@ describe('GoalInfo', () => {
 
   beforeEach(() => {
     props = {
-      steps: [{ completed: true }, { completed: false }]
+      steps: [{ completed: true, id: '0' }, { completed: false, id: '1' }]
     };
     mountedGoalInfo = undefined;
   });
@@ -37,6 +38,15 @@ describe('GoalInfo', () => {
 
   it('should always render a `List`', () => {
     expect(goalInfo().find(List).length).toBe(1);
+  });
+
+  it('should render as many `Step`s as `steps.length`', () => {
+    goalInfo().setProps({ steps: [] });
+    expect(goalInfo().find(Step).length).toBe(0);
+    goalInfo().setProps({ steps: [{completed: true, id: '0'}] });
+    expect(goalInfo().find(Step).length).toBe(1);
+    goalInfo().setProps({ steps: [{completed: true, id: '0'}, {completed: false, id: '1'}] });
+    expect(goalInfo().find(Step).length).toBe(2);
   });
 
   it('should always render a `FlatButton`', () => {

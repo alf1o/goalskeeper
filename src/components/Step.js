@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { ListItem } from 'material-ui/List';
+import Checkbox from 'material-ui/Checkbox';
+import Clear from 'material-ui/svg-icons/content/clear';
+import Done from 'material-ui/svg-icons/action/done';
 
 class Step extends Component {
-  render() {
-    return (
-      <div>
+  static propTypes = {
+    step: PropTypes.object.isRequired
+  };
 
-      </div>
+  render() {
+    const { step } = this.props;
+    return (
+      <ListItem
+        leftCheckbox={<Checkbox checked={step.completed} />}
+        primaryText={step.content}
+        rightIcon={step.completed ? <Done /> : <Clear />}
+      />
     );
   }
 }
