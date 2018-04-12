@@ -6,9 +6,9 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import GoalInfo from '../GoalInfo';
 import Paper from 'material-ui/Paper';
-import { List } from 'material-ui/List';
+import List from 'material-ui/List';
 import Step from '../Step';
-import FlatButton from 'material-ui/FlatButton';
+import Button from 'material-ui/Button';
 
 describe('GoalInfo', () => {
   let props = {};
@@ -49,25 +49,16 @@ describe('GoalInfo', () => {
     expect(goalInfo().find(Step).length).toBe(2);
   });
 
-  it('should always render a `FlatButton`', () => {
-    expect(goalInfo().find(FlatButton).length).toBe(1);
+  it('should always render a `Button`', () => {
+    expect(goalInfo().find(Button).length).toBe(1);
   });
-  describe('the rendered `FlatButton`', () => {
+  describe('the rendered `Button`', () => {
     let flatBtn;
     beforeEach(() => {
-      flatBtn = goalInfo().find(FlatButton);
-    });
-    it('should receive a `label` prop', () => {
-      expect(flatBtn.props().label).toBeDefined();
-    });
-    it('should receive a `icon` prop', () => {
-      expect(flatBtn.props().icon).toBeDefined();
+      flatBtn = goalInfo().find(Button);
     });
     it('should receive a `onClick` prop', () => {
       expect(flatBtn.props().onClick).toBeDefined();
-    });
-    it('should receive a `fullWidth` prop', () => {
-      expect(flatBtn.props().fullWidth).toBeDefined();
     });
   });
 

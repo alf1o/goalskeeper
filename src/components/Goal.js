@@ -42,7 +42,7 @@ class Goal extends Component {
           <ListItemIcon>
             <ArrowDropDown />
           </ListItemIcon>
-          <ListItemText inset primary={goal.label} secondary={'Due at: ' + goal.dueDate} />
+          <ListItemText inset primary={goal.label} secondary={'Due: ' + goal.dueDate} />
         </ListItem>
         {expanded && <GoalInfo steps={goal.steps} />}
         <LinearProgress variant='determinate' value={progress} />

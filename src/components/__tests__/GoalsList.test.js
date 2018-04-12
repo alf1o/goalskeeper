@@ -6,7 +6,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import GoalsList from '../GoalsList';
 import Paper from 'material-ui/Paper';
-import { List } from 'material-ui/List';
+import List from 'material-ui/List';
 import Goal from '../Goal';
 
 describe('GoalsList', () => {

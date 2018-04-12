@@ -16,7 +16,7 @@ class App extends Component {
   static propTypes = {
     mockState: PropTypes.object.isRequired
   };
-
+  // TODO: Header Component
   render() {
     const { mockState } = this.props;
     return (
@@ -49,5 +49,7 @@ class App extends Component {
     );
   }
 }
+
+export { App as UnwrappedApp };
 
 export default withRoot(withStyles()(App));

@@ -5,10 +5,10 @@ Enzyme.configure({ adapter: new Adapter() });
 import React from 'react';
 import { shallow } from 'enzyme';
 import Goal from '../Goal';
-import { ListItem } from 'material-ui/List';
-import LinearProgress from 'material-ui/LinearProgress';
-import FlatButton from 'material-ui/FlatButton';
+import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import GoalInfo from '../GoalInfo';
+import { LinearProgress } from 'material-ui/Progress';
 
 describe('Goal', () => {
   let props;
@@ -55,17 +55,26 @@ describe('Goal', () => {
       beforeEach(() => {
         listItem = div.find(ListItem);
       });
-      it('should receive a `leftIcon` prop', () => {
-        expect(listItem.props().leftIcon).toBeDefined();
-      });
       it('should receive a `onClick` prop', () => {
         expect(listItem.props().onClick).toBeDefined();
       });
-      it('should receive a `primaryText` prop', () => {
-        expect(listItem.props().primaryText).toBeDefined();
+      it('should render a `ListItemIcon`', () => {
+        expect(listItem.find(ListItemIcon).length).toBe(1);
       });
-      it('should receive a `secondaryText` prop', () => {
-        expect(listItem.props().secondaryText).toBeDefined();
+      it('should render a `ListItemText`', () => {
+        expect(listItem.find(ListItemText).length).toBe(1);
+      });
+      describe('the rendered `ListItemText`', () => {
+        it('should receive a `primary` prop with the value of `goal.label`', () => {
+          const listText = listItem.find(ListItemText);
+          const actual = mountGoal().instance().props.goal.label;
+          expect(listText.props().primary).toEqual(actual);
+        });
+        it('should receive a `scondary` prop with the value of `goal.dueDate`', () => {
+          const listText = listItem.find(ListItemText);
+          const actual = 'Due: ' + mountGoal().instance().props.goal.dueDate;
+          expect(listText.props().secondary).toEqual(actual);
+        });
       });
     });
 
@@ -77,8 +86,8 @@ describe('Goal', () => {
       beforeEach(() => {
         linearProgress = div.find(LinearProgress);
       });
-      it('should receive a `mode` prop', () => {
-        expect(linearProgress.props().mode).toBeDefined();
+      it('should receive a `variant` prop', () => {
+        expect(linearProgress.props().variant).toBeDefined();
       });
       it('should receive a `value` prop', () => {
         expect(linearProgress.props().value).toBeDefined();
