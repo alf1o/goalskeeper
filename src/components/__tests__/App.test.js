@@ -6,13 +6,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { shallow } from 'enzyme';
 import { UnwrappedApp } from '../App';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import Header from '../Header';
 import GoalsList from '../GoalsList';
+import Button from 'material-ui/Button';
 import ContentAdd from '@material-ui/icons/Add';
 
 describe('App', () => {
@@ -54,25 +50,9 @@ describe('App', () => {
     });
   });
 
-  it('should always render an `AppBar`', () => {
-    expect(app().find(AppBar).length).toBe(1);
+  it('should always render an `Header`', () => {
+    expect(app().find(Header).length).toBe(1);
   });
-  //  TODO
-  // describe('the rendered `AppBar`', () => {
-  //   let appBar;
-  //   beforeEach(() => {
-  //     appBar = app().find(AppBar);
-  //   });
-  //   it('should receive an `onLeftIconButtonClick` prop', () => {
-  //     expect(appBar.props().onLeftIconButtonClick).toBeDefined();
-  //   });
-  //   it('should receive a `title` prop', () => {
-  //     expect(appBar.props().title).toBeDefined();
-  //   });
-  //   it('should receive an `onTitleClick` prop', () => {
-  //     expect(appBar.props().onTitleClick).toBeDefined();
-  //   });
-  // });
 
   it('should always render a `GoalsList`', () => {
     expect(app().find(GoalsList).length).toBe(1);
