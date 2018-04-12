@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ListItem } from 'material-ui/List';
-import ArrowDropDown from 'material-ui/svg-icons/navigation/arrow-drop-down';
+import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import GoalInfo from './GoalInfo';
-import LinearProgress from 'material-ui/LinearProgress';
+import { LinearProgress } from 'material-ui/Progress';
 
 class Goal extends Component {
   static propTypes = {
@@ -36,14 +36,16 @@ class Goal extends Component {
     const { expanded, progress } = this.state;
     return (
       <div>
-        <ListItem
-          leftIcon={<ArrowDropDown />}
+        <ListItem component="button"
           onClick={this.handleClick}
-          primaryText={goal.label}
-          secondaryText={'Due at: ' + goal.dueDate}
-        />
+        >
+          <ListItemIcon>
+            <ArrowDropDown />
+          </ListItemIcon>
+          <ListItemText inset primary={goal.label} secondary={'Due at: ' + goal.dueDate} />
+        </ListItem>
         {expanded && <GoalInfo steps={goal.steps} />}
-        <LinearProgress mode='determinate' value={progress} />
+        <LinearProgress variant='determinate' value={progress} />
       </div>
     );
   }

@@ -1,23 +1,49 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ListItem } from 'material-ui/List';
+import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
-import Clear from 'material-ui/svg-icons/content/clear';
-import Done from 'material-ui/svg-icons/action/done';
+import Clear from '@material-ui/icons/Clear';
+import Done from '@material-ui/icons/Done';
 
 class Step extends Component {
   static propTypes = {
     step: PropTypes.object.isRequired
   };
 
+  constructor() {
+    super();
+    this.state = {
+      completed: false
+    };
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  componentDidMount() {
+    const { completed } = this.props.step;
+    this.setState({ completed });
+  }
+
+  handleClick() {
+    this.setState(oldState => ({ completed: !oldState.completed }));
+  }
+
   render() {
     const { step } = this.props;
+    const { completed } = this.state;
     return (
       <ListItem
-        leftCheckbox={<Checkbox checked={step.completed} />}
-        primaryText={step.content}
-        rightIcon={step.completed ? <Done /> : <Clear />}
-      />
+        component="button"
+        onClick={this.handleClick} 
+      >
+        <Checkbox
+          checked={completed}
+          disableRipple
+        />
+        <ListItemText inset primary={step.content} />
+        <ListItemIcon>
+          {completed ? <Done /> : <Clear />}
+        </ListItemIcon>
+      </ListItem>
     );
   }
 }

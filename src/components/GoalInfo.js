@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
-import { List } from 'material-ui/List';
+import List from 'material-ui/List';
 import Step from './Step';
-import FlatButton from 'material-ui/FlatButton';
-import Add from 'material-ui/svg-icons/content/add';
+import Button from 'material-ui/Button';
+import Add from '@material-ui/icons/Add';
 
 class GoalInfo extends Component {
   static propTypes = {
@@ -15,15 +15,17 @@ class GoalInfo extends Component {
     const { steps } = this.props;
     return (
       <Paper>
-        <List>
+        <List component="ul">
           {steps.map(step => <Step key={step.id} step={step} />)}
         </List>
-        <FlatButton
-          label='add a step'
-          icon={<Add />}
+        <Button
+          color="primary"
           onClick={() => alert('Add a step')}
           fullWidth={true}
-        />
+        >
+          <Add />
+          add a step
+        </Button>
       </Paper>
     );
   }
