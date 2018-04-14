@@ -6,6 +6,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { shallow } from 'enzyme';
 import { UnwrappedApp } from '../App';
+import SideMenu from '../SideMenu';
 import Header from '../Header';
 import GoalsList from '../GoalsList';
 import Button from 'material-ui/Button';
@@ -50,8 +51,25 @@ describe('App', () => {
     });
   });
 
+  it('should always render a `SideMenu`', () => {
+    expect(app().find(SideMenu).length).toBe(1);
+  });
+  describe('the rendered `SideMenu`', () => {
+    it('should receive an `open` prop', () => {
+      expect(app().find(SideMenu).props().open).toBeDefined();
+    });
+    it('should receive an `handleClose` prop', () => {
+      expect(app().find(SideMenu).props().handleClose).toBeDefined();
+    });
+  });
+
   it('should always render an `Header`', () => {
     expect(app().find(Header).length).toBe(1);
+  });
+  describe('the rendered `Header`', () => {
+    it('should receive an `openDrawer` prop', () => {
+      expect(app().find(Header).props().openDrawer).toBeDefined();
+    });
   });
 
   it('should always render a `GoalsList`', () => {
@@ -77,6 +95,43 @@ describe('App', () => {
     });
     it('should receive an `onClick` prop', () => {
       expect(btn.props().onClick).toBeDefined();
+    });
+  });
+
+  it('should have a `state.drawerOpen` property', () => {
+    expect(app().state().drawerOpen).toBeDefined();
+  });
+  it('`state.drawerOpen` should be `false` by default', () => {
+    expect(app().state().drawerOpen).toBe(false);
+  });
+
+  it('should have an `handleOpenDrawer` method', () => {
+    expect(UnwrappedApp.prototype.handleOpenDrawer).toBeDefined();
+  });
+  describe('`handleOpenDrawer` method', () => {
+    const handleOpenDrawerSpy = jest.spyOn(UnwrappedApp.prototype, 'handleOpenDrawer');
+    afterEach(() => {
+      handleOpenDrawerSpy.mockClear();
+    });
+    it('should set `state.drawerOpen` to `true`', () => {
+      app().instance().handleOpenDrawer();
+      expect(handleOpenDrawerSpy.mock.calls.length).toBe(1);
+      expect(app().state().drawerOpen).toBe(true);
+    });
+  });
+
+  it('should have an `handleCloseDrawer` method', () => {
+    expect(UnwrappedApp.prototype.handleCloseDrawer).toBeDefined();
+  });
+  describe('`handleCloseDrawer` method', () => {
+    const handleCloseDrawerSpy = jest.spyOn(UnwrappedApp.prototype, 'handleCloseDrawer');
+    afterEach(() => {
+      handleCloseDrawerSpy.mockClear();
+    });
+    it('should set `state.drawerOpen` to `false`', () => {
+      app().instance().handleCloseDrawer();
+      expect(handleCloseDrawerSpy.mock.calls.length).toBe(1);
+      expect(app().state().drawerOpen).toBe(false);
     });
   });
 

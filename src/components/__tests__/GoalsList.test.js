@@ -7,6 +7,7 @@ import { shallow } from 'enzyme';
 import GoalsList from '../GoalsList';
 import Paper from 'material-ui/Paper';
 import List from 'material-ui/List';
+// import ListSubheader from 'material-ui/List/ListSubheader';
 import Goal from '../Goal';
 
 describe('GoalsList', () => {
@@ -33,6 +34,10 @@ describe('GoalsList', () => {
       expect(goalsList().find(Paper).children()).toEqual(goalsList().children());
     });
   });
+
+  // it('should render a `ListSubheader`', () => {
+  //   expect(goalsList().find(ListSubheader).length).toBe(1);
+  // });
 
   it('should always render a `List`', () => {
     expect(goalsList().find(List).length).toBe(1);

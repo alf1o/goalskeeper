@@ -7,16 +7,19 @@ import IconButton from 'material-ui/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
 class Header extends Component {
-  static propTypes = {};
+  static propTypes = {
+    openDrawer: PropTypes.func.isRequired
+  };
 
   render() {
+    const { openDrawer } = this.props;
     return (
       <AppBar>
         <Toolbar>
           <IconButton
             color="inherit"
             aria-label="Menu"
-            onClick={() => alert('Open menu')}
+            onClick={openDrawer}
           >
             <MenuIcon />
           </IconButton>

@@ -19,7 +19,9 @@ describe('Header', () => {
   }
 
   beforeEach(() => {
-    props = {};
+    props = {
+      openDrawer: jest.fn()
+    };
     mountedHeader = undefined;
   });
 
@@ -35,6 +37,11 @@ describe('Header', () => {
       const iconBtn = header().find(IconButton);
       expect(iconBtn.props().onClick).toBeDefined();
     });
+  });
+
+  it('should call the `openDrawer` prop when `IconButton` is clicked', () => {
+    header().find(IconButton).simulate('click');
+    expect(header().instance().props.openDrawer.mock.calls.length).toBe(1);
   });
 
 });
