@@ -5,8 +5,11 @@ import withRoot from '../withRoot';
 import { withStyles } from 'material-ui/styles';
 import SideMenu from './SideMenu';
 import Header from './Header';
-import Button from 'material-ui/Button';
 import GoalsList from './GoalsList';
+
+import CreateGoal from './CreateGoal';
+
+import Button from 'material-ui/Button';
 import ContentAdd from '@material-ui/icons/Add';
 
 class App extends Component {
@@ -41,6 +44,9 @@ class App extends Component {
           openDrawer={this.handleOpenDrawer}
         />
         <GoalsList goalsById={mockState.goalsById} />
+
+        <CreateGoal />
+
         <Button
           variant="fab"
           color="primary"

@@ -33,11 +33,12 @@ class Step extends Component {
     return (
       <ListItem
         component="button"
-        onClick={this.handleClick} 
+        onClick={this.handleClick}
       >
         <Checkbox
           checked={completed}
           disableRipple
+          color='primary'
         />
         <ListItemText inset primary={step.content} />
         <ListItemIcon>
