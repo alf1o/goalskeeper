@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
+import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
 import GoalInfo from './GoalInfo';
 import { LinearProgress } from 'material-ui/Progress';
 
@@ -40,7 +41,7 @@ class Goal extends Component {
           onClick={this.handleClick}
         >
           <ListItemIcon>
-            <ArrowDropDown />
+            {expanded ? <ArrowDropUp /> : <ArrowDropDown />}
           </ListItemIcon>
           <ListItemText inset primary={goal.label} secondary={'Due: ' + goal.dueDate} />
         </ListItem>

@@ -7,6 +7,7 @@ import { shallow } from 'enzyme';
 import Goal from '../Goal';
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
+import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
 import GoalInfo from '../GoalInfo';
 import { LinearProgress } from 'material-ui/Progress';
 
@@ -36,14 +37,6 @@ describe('Goal', () => {
   describe('the rendered `div`', () => {
     let div;
     beforeEach(() => {
-      props = {
-        goal: {
-          id: 'goal_0',
-          label: 'Test goal 0',
-          steps: [{ completed: true }, { completed: true }],
-          dueDate: '13/04/2018'
-        }
-      };
       div = mountGoal().find('div').first();
     });
 
@@ -127,6 +120,9 @@ describe('Goal', () => {
     it('should not render a `GoalInfo`', () => {
       expect(mountGoal().find(GoalInfo).length).toBe(0);
     });
+    it('should render an `ArrowDropDown`', () => {
+      expect(mountGoal().find(ArrowDropDown).length).toBe(1);
+    });
   });
 
   it('should have an `handleClick` method', () => {
@@ -163,6 +159,9 @@ describe('Goal', () => {
     it('should pass `goal.steps` as prop to the rendered `GoalInfo`', () => {
       const goalInfo = mountGoal().find(GoalInfo);
       expect(goalInfo.props().steps).toBeDefined();
+    });
+    it('should render an `ArrowDropUp`', () => {
+      expect(mountGoal().find(ArrowDropUp).length).toBe(1);
     });
   });
 
