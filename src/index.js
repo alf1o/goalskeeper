@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
+import { BrowserRouter } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
 
 const mockState = {
@@ -57,7 +58,9 @@ const mockState = {
 };
 
 ReactDOM.render(
-  <App mockState={mockState} />,
+  <BrowserRouter>
+    <App mockState={mockState} />
+  </BrowserRouter>,
   document.getElementById('root')
 );
 

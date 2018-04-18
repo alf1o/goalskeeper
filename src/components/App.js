@@ -5,11 +5,7 @@ import withRoot from '../withRoot';
 import { withStyles } from 'material-ui/styles';
 import SideMenu from './SideMenu';
 import Header from './Header';
-import GoalsList from './GoalsList';
-
-import CreateGoal from './CreateGoal';
-import Profile from './Profile';
-
+import Routes from './Routes';
 import Button from 'material-ui/Button';
 import ContentAdd from '@material-ui/icons/Add';
 
@@ -44,10 +40,8 @@ class App extends Component {
         <Header
           openDrawer={this.handleOpenDrawer}
         />
-        <GoalsList goalsById={mockState.goalsById} />
 
-        <CreateGoal />
-        <Profile />
+        <Routes goalsById={mockState.goalsById} />
 
         <Button
           variant="fab"

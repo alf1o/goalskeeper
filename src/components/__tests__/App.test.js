@@ -5,10 +5,11 @@ Enzyme.configure({ adapter: new Adapter() });
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { shallow } from 'enzyme';
+import { MemoryRouter } from 'react-router';
 import { UnwrappedApp } from '../App';
 import SideMenu from '../SideMenu';
 import Header from '../Header';
-import GoalsList from '../GoalsList';
+import Routes from '../Routes';
 import Button from 'material-ui/Button';
 import ContentAdd from '@material-ui/icons/Add';
 
@@ -36,7 +37,7 @@ describe('App', () => {
 
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<UnwrappedApp {...props} />, div);
+    ReactDOM.render(<MemoryRouter><UnwrappedApp {...props} /></MemoryRouter>, div);
     ReactDOM.unmountComponentAtNode(div);
   });
 
@@ -72,16 +73,12 @@ describe('App', () => {
     });
   });
 
-  it('should always render a `GoalsList`', () => {
-    expect(app().find(GoalsList).length).toBe(1);
+  it('should always render a `Routes`', () => {
+    expect(app().find(Routes).length).toBe(1);
   });
-  describe('the rendered `GoalsList`', () => {
-    let goalsList;
-    beforeEach(() => {
-      goalsList = app().find(GoalsList);
-    });
+  describe('the rendered `Routes`', () => {
     it('should receive a `goalsById` prop', () => {
-      expect(goalsList.props().goalsById).toBeDefined();
+      expect(app().find(Routes).props().goalsById).toBeDefined();
     });
   });
 
