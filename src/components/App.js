@@ -8,6 +8,9 @@ import Header from './Header';
 import Routes from './Routes';
 import Button from 'material-ui/Button';
 import ContentAdd from '@material-ui/icons/Add';
+import { Link } from 'react-router-dom';
+
+const MyLink = props => <Link to="/creategoal" {...props} />;
 
 class App extends Component {
   static propTypes = {
@@ -44,6 +47,7 @@ class App extends Component {
         <Routes goalsById={mockState.goalsById} />
 
         <Button
+          component={MyLink}
           variant="fab"
           color="primary"
           aria-label="add"
@@ -52,7 +56,6 @@ class App extends Component {
             bottom: 15,
             right: 15
           }}
-          onClick={() => alert('Add a new goal')}
         >
           <ContentAdd />
         </Button>

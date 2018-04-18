@@ -11,11 +11,13 @@ class Profile extends Component {
   };
 
   render() {
+    const { history } = this.props;
     return (
-      <Card>
+      <Card style={{marginTop: '56px'}}>
         <CardHeader
+          title="User"
           action={
-            <IconButton>
+            <IconButton onClick={() => history.goBack()}>
               <ArrowBack />
             </IconButton>
           }

@@ -85,15 +85,6 @@ describe('App', () => {
   it('should always render a `Button`', () => {
     expect(app().find(Button).length).toBe(1);
   });
-  describe('the rendered `Button`', () => {
-    let btn;
-    beforeEach(() => {
-      btn = app().find(Button);
-    });
-    it('should receive an `onClick` prop', () => {
-      expect(btn.props().onClick).toBeDefined();
-    });
-  });
 
   it('should have a `state.drawerOpen` property', () => {
     expect(app().state().drawerOpen).toBeDefined();

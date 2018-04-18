@@ -39,7 +39,7 @@ class CreateGoal extends Component {
     return (
       <form
         onSubmit={this.handleSubmit}
-        style={{display: 'flex', flexDirection: 'column'}}
+        style={{display: 'flex', flexDirection: 'column', marginTop: '56px'}}
       >
         <FormLabel component="legend">Required Fields</FormLabel>
         <TextField

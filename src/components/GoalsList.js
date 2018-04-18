@@ -15,7 +15,7 @@ class GoalsList extends Component {
     const { goalsById } = this.props;
     const goalsList = Object.values(goalsById);
     return (
-      <Paper>
+      <Paper style={{marginTop: '56px'}}>
         {/*<ListSubheader>{goalsList.length ? 'Your Goals' : `No goals yet? Let's add one!`}</ListSubheader>*/}
         <List component="ul" style={{ marginTop: 56 }}>
           {goalsList.map(goal => (

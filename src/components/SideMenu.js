@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Drawer from 'material-ui/Drawer';
 import List, { ListItem, ListItemText } from 'material-ui/List';
+import { NavLink } from 'react-router-dom';
 
 class SideMenu extends Component {
   static propTypes = {
@@ -23,8 +24,8 @@ class SideMenu extends Component {
           onKeyDown={handleClose}
         >
           <List>
-            <ListItem component="button"
-              onClick={() => alert('navigate to /profile')}
+            <ListItem component={NavLink}
+            to="/profile"
             >
               <ListItemText inset primary="Profile" />
             </ListItem>
