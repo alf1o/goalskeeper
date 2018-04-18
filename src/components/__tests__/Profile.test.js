@@ -5,7 +5,7 @@ Enzyme.configure({ adapter: new Adapter() });
 import React from 'react'
 import { shallow } from 'enzyme';
 import Profile from '../Profile';
-import Card, { CardContent } from 'material-ui/Card';
+import Card, { CardHeader, CardContent } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 
 describe('Profile', () => {
@@ -24,6 +24,24 @@ describe('Profile', () => {
 
   it('should always render a `Card`', () => {
     expect(profile().find(Card).length).toBe(1);
+  });
+  describe('the rendered `Card`', () => {
+    it('should contain everything else', () => {
+      const card = profile().find(Card);
+      expect(card.children()).toEqual(profile().children());
+    });
+  });
+
+  it('should always render a `CardHeader`', () => {
+    expect(profile().find(CardHeader).length).toBe(1);
+  });
+
+  it('should always a render a `CardContent`', () => {
+    expect(profile().find(CardContent).length).toBe(1);
+  });
+
+  it('should always render 3 `Typography`', () => {
+    expect(profile().find(Typography).length).toBe(3);
   });
 
 });

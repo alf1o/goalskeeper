@@ -8,6 +8,7 @@ import Header from './Header';
 import GoalsList from './GoalsList';
 
 import CreateGoal from './CreateGoal';
+import Profile from './Profile';
 
 import Button from 'material-ui/Button';
 import ContentAdd from '@material-ui/icons/Add';
@@ -46,6 +47,7 @@ class App extends Component {
         <GoalsList goalsById={mockState.goalsById} />
 
         <CreateGoal />
+        <Profile />
 
         <Button
           variant="fab"
