@@ -1,9 +1,13 @@
 import { CREATE_GOAL } from './types';
 
-function createGoal(goal = {}) {
+function createGoal(id, name = '', dueDate = null, description = '') {
   return {
     type: CREATE_GOAL,
-    goal
+    id,
+    name,
+    dateCreated: Date.now(),
+    dueDate,
+    description
   };
 }
 
@@ -11,12 +15,10 @@ export default createGoal;
 /*
   {
     type,
-    {
-      id,
-      name,
-      dateCreated,
-      dueDate,
-      description
-    }
+    id,
+    name,
+    dateCreated,
+    dueDate,
+    description
   }
 */
