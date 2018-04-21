@@ -3,7 +3,8 @@ import {
   DELETE_GOAL,
   EDIT_GOAL,
   COMPLETE_GOAL,
-  ADD_STEP
+  ADD_STEP,
+  REMOVE_STEP
 } from '../actions/types';
 import { formattedDate } from '../utils';
 
@@ -37,6 +38,11 @@ function goal(state = {}, action) {
           ...state,
           steps: [...state.steps, action.id]
         };
+      case REMOVE_STEP:
+        return {
+          ...state,
+          steps: state.steps.filter(step => step !== action.id)
+        };
     default:
       return state;
   }
@@ -69,6 +75,11 @@ function goalsById(state = {}, action) {
       };
     case ADD_STEP:
       // TODO: be sure to dispatch with the right `id`
+      return {
+        ...state,
+        [action.goalId]: goal(state[action.goalId], action)
+      };
+    case REMOVE_STEP:
       return {
         ...state,
         [action.goalId]: goal(state[action.goalId], action)

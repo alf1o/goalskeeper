@@ -3,6 +3,7 @@ import deleteGoal from '../../actions/deleteGoal';
 import editGoal from '../../actions/editGoal';
 import completeGoal from '../../actions/completeGoal';
 import addStep from '../../actions/addStep';
+import removeStep from '../../actions/removeStep';
 import goalsById from '../goalsById';
 import { deepFreeze, formattedDate } from '../../utils';
 
@@ -213,6 +214,59 @@ describe('`goalsById` reducer', () => {
       }
     };
     expect(state2).toEqual(expected);
+  });
+
+  it('should handle `REMOVE_STEP`', () => {
+    const initialState = {
+      id_0: {
+        id: 'id_0',
+        name: 'Test goal',
+        dueDate: '11/11/2018',
+        steps: ['step_1', 'step_2'],
+        completed: false,
+        dateCreated: '04/04/2018',
+        description: ''
+      }
+    };
+    deepFreeze(initialState);
+
+    const action1 = removeStep('id_0', 'step_1');
+    const state1 = goalsById(initialState, action1);
+    let expected = {
+      id_0: {
+        id: 'id_0',
+        name: 'Test goal',
+        dueDate: '11/11/2018',
+        steps: ['step_2'],
+        completed: false,
+        dateCreated: '04/04/2018',
+        description: ''
+      }
+    };
+    expect(state1).toEqual(expected);
+
+    deepFreeze(state1);
+
+    const action2 = removeStep('id_0', 'step_2');
+    const state2 = goalsById(state1, action2);
+    expected = {
+      id_0: {
+        id: 'id_0',
+        name: 'Test goal',
+        dueDate: '11/11/2018',
+        steps: [],
+        completed: false,
+        dateCreated: '04/04/2018',
+        description: ''
+      }
+    };
+    expect(state2).toEqual(expected);
+
+    deepFreeze(state2);
+
+    const action3 = removeStep('id_0', 'not_found');
+    const state3 = goalsById(state2, action3);
+    expect(state3).toEqual(state2);
   });
 
 });
