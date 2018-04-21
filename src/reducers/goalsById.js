@@ -18,6 +18,9 @@ function goal(state = {}, action) {
         dateCreated: formattedDate(),
         description: action.description
       };
+    case DELETE_GOAL:
+      if (state.id !== action.id) return state;
+      return null;
     default:
       return state;
   }
@@ -30,6 +33,12 @@ function goalsById(state = {}, action) {
         ...state,
         [action.id]: goal(undefined, action)
       };
+    case DELETE_GOAL:
+      return Object.keys(state).reduce((newState, id) => {
+        const _goal = goal(state[id], action);
+        _goal && (newState[id] = _goal);
+        return newState;
+      }, {});
     default:
       return state;
   }

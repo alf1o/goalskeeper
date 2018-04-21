@@ -1,4 +1,5 @@
 import createGoal from '../../actions/createGoal';
+import deleteGoal from '../../actions/deleteGoal';
 import goalsById from '../goalsById';
 import { deepFreeze, formattedDate } from '../../utils';
 
@@ -58,6 +59,47 @@ describe('`goalsById` reducer', () => {
       }
     };
     expect(newState).toEqual(expected);
+  });
+
+  it('should hande `DELETE_GOAL`', () => {
+    const state1 = {
+      ...initialState,
+      id_1: {
+        id: 'id_1',
+        name: 'Easy goal',
+        dueDate: '12/07/2018',
+        steps: [],
+        completed: false,
+        dateCreated: formattedDate(),
+        description: 'Start small'
+      }
+    };
+    deepFreeze(state1);
+
+    const action1 = deleteGoal('id_0');
+    const state2 = goalsById(state1, action1);
+    const expected = {
+      id_1: {
+        id: 'id_1',
+        name: 'Easy goal',
+        dueDate: '12/07/2018',
+        steps: [],
+        completed: false,
+        dateCreated: formattedDate(),
+        description: 'Start small'
+      }
+    };
+    expect(expected).toEqual(state2);
+
+    deepFreeze(state2);
+
+    const action2 = deleteGoal('id_1');
+    const state3 = goalsById(state2, action2);
+    expect({}).toEqual(state3);
+
+    const actionForNotFoundId = deleteGoal('not_found');
+    const stateForNotFoundId = goalsById(state2, actionForNotFoundId);
+    expect(state2).toEqual(stateForNotFoundId);
   });
 
 });
