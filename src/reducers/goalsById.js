@@ -2,7 +2,8 @@ import {
   CREATE_GOAL,
   DELETE_GOAL,
   EDIT_GOAL,
-  COMPLETE_GOAL
+  COMPLETE_GOAL,
+  ADD_STEP
 } from '../actions/types';
 import { formattedDate } from '../utils';
 
@@ -30,6 +31,11 @@ function goal(state = {}, action) {
       return {
           ...state,
           completed: true
+        };
+      case ADD_STEP:
+        return {
+          ...state,
+          steps: [...state.steps, action.id]
         };
     default:
       return state;
@@ -60,6 +66,12 @@ function goalsById(state = {}, action) {
       return {
         ...state,
         [action.id]: goal(state[action.id], action)
+      };
+    case ADD_STEP:
+      // TODO: be sure to dispatch with the right `id`
+      return {
+        ...state,
+        [action.goalId]: goal(state[action.goalId], action)
       };
     default:
       return state;
