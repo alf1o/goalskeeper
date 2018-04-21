@@ -21,6 +21,13 @@ function goal(state = {}, action) {
     case DELETE_GOAL:
       if (state.id !== action.id) return state;
       return null;
+    case EDIT_GOAL:
+      return state.id === action.id
+        ? {
+          ...state,
+          [action.what]: action.how
+        }
+        : state;
     default:
       return state;
   }
@@ -39,6 +46,11 @@ function goalsById(state = {}, action) {
         _goal && (newState[id] = _goal);
         return newState;
       }, {});
+    case EDIT_GOAL:
+      return {
+        ...state,
+        [action.id]: goal(state[action.id], action)
+      };
     default:
       return state;
   }

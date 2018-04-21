@@ -1,5 +1,6 @@
 import createGoal from '../../actions/createGoal';
 import deleteGoal from '../../actions/deleteGoal';
+import editGoal from '../../actions/editGoal';
 import goalsById from '../goalsById';
 import { deepFreeze, formattedDate } from '../../utils';
 
@@ -89,7 +90,7 @@ describe('`goalsById` reducer', () => {
         description: 'Start small'
       }
     };
-    expect(expected).toEqual(state2);
+    expect(state2).toEqual(expected);
 
     deepFreeze(state2);
 
@@ -100,6 +101,57 @@ describe('`goalsById` reducer', () => {
     const actionForNotFoundId = deleteGoal('not_found');
     const stateForNotFoundId = goalsById(state2, actionForNotFoundId);
     expect(state2).toEqual(stateForNotFoundId);
+  });
+
+  it('should handle `EDIT_GOAL`', () => {
+    const actionEditName = editGoal('id_0', 'name', 'new name new life');
+    const stateEditName = goalsById(initialState, actionEditName);
+    let expected = {
+      id_0: {
+        id: 'id_0',
+        name: 'new name new life',
+        dueDate: '11/11/2018',
+        steps: [],
+        completed: false,
+        dateCreated: '04/04/2018',
+        description: ''
+      }
+    };
+    expect(stateEditName).toEqual(expected);
+
+    deepFreeze(stateEditName);
+
+    const actionEditDate = editGoal('id_0', 'dueDate', '19/10/2018');
+    const stateEditDate = goalsById(stateEditName, actionEditDate);
+    expected = {
+      id_0: {
+        id: 'id_0',
+        name: 'new name new life',
+        dueDate: '19/10/2018',
+        steps: [],
+        completed: false,
+        dateCreated: '04/04/2018',
+        description: ''
+      }
+    };
+    expect(stateEditDate).toEqual(expected);
+
+    deepFreeze(stateEditDate);
+
+    const actionEditDescription = editGoal('id_0', 'description', 'A goal needs a plan');
+    const stateEditDescription = goalsById(stateEditDate, actionEditDescription);
+    expected = {
+      id_0: {
+        id: 'id_0',
+        name: 'new name new life',
+        dueDate: '19/10/2018',
+        steps: [],
+        completed: false,
+        dateCreated: '04/04/2018',
+        description: 'A goal needs a plan'
+      }
+    };
+    expect(stateEditDescription).toEqual(expected);
   });
 
 });
