@@ -98,4 +98,30 @@ describe('`stepsByid` reducer', () => {
     expect(state2).toEqual({});
   });
 
+  it('should handle `COMPLETE_STEP`', () => {
+    const actionNotFoundId = completeStep('not_found');
+    const stateNotFoundId = stepsById(initialState, actionNotFoundId);
+    expect(stateNotFoundId).toEqual(initialState);
+
+    const action = completeStep('step_2');
+    const state = stepsById(initialState, action);
+    const expected = {
+      step_1: {
+        id: 'step_1',
+        content: 'Test step #1',
+        completed: false,
+        dateCompleted: null,
+        goalId: 'id_0'
+      },
+      step_2: {
+        id: 'step_2',
+        content: 'Test step #2',
+        completed: true,
+        dateCompleted: null,
+        goalId: 'id_0'
+      }
+    };
+    expect(state).toEqual(expected);
+  });
+
 });

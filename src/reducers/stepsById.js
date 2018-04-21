@@ -13,6 +13,11 @@ function step(state = {}, action) {
     case REMOVE_STEP:
       if (state.id !== action.id) return state;
       return null;
+    case COMPLETE_STEP:
+      return {
+        ...state,
+        completed: true
+      };
     default:
       return state;
   }
@@ -31,6 +36,12 @@ function stepsById(state = {}, action) {
         _step && (newState[stepId] = _step);
         return newState;
       }, {});
+    case COMPLETE_STEP:
+      if (!(state[action.id])) return state;
+      return {
+        ...state,
+        [action.id]: step(state[action.id], action)
+      };
     default:
       return state;
   }
