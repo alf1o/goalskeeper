@@ -7,3 +7,4 @@ export const COMPLETE_GOAL = 'COMPLETE_GOAL';
 // Step.
 export const ADD_STEP = 'ADD_STEP';
 export const REMOVE_STEP = 'REMOVE_STEP';
+export const COMPLETE_STEP = 'COMPLETE_STEP';
