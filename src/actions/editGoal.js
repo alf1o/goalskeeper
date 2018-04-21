@@ -1,9 +1,11 @@
 import { EDIT_GOAL } from './types';
 
-function editGoal(what = 'name', how = '') {
+function editGoal(id, what = 'name', how = '') {
   return {
     type: EDIT_GOAL,
-    [what]: how
+    id,
+    what,
+    how
   };
 }
 
@@ -12,6 +14,8 @@ export default editGoal;
 /*
   {
     type,
-    name || dueDate
+    id,
+    what: (name || dueDate || description),
+    how
   }
 */
