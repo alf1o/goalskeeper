@@ -1,0 +1,77 @@
+import addStep from '../../actions/addStep';
+import removeStep from '../../actions/removeStep';
+import completeStep from '../../actions/completeStep';
+import stepsById from '../stepsById';
+import { deepFreeze } from '../../utils';
+
+describe('`stepsByid` reducer', () => {
+  const initialState = {
+    step_1: {
+      id: 'step_1',
+      content: 'Test step #1',
+      completed: false,
+      dateCompleted: null,
+      goalId: 'id_0'
+    },
+    step_2: {
+      id: 'step_2',
+      content: 'Test step #2',
+      completed: false,
+      dateCompleted: null,
+      goalId: 'id_0'
+    }
+  };
+  deepFreeze(initialState);
+
+  it('should return the initial `state` when the `state` argument is `undefined`', () => {
+    expect(stepsById(undefined, {})).toMatchObject({});
+  });
+
+  it('should return the current `state` when the `action.type` is unknown', () => {
+    expect(stepsById(initialState, { type: 'UNKNOWN' })).toMatchObject(initialState);
+  });
+
+  it('should handle `ADD_STEP`', () => {
+    const action1 = addStep('id_1', 'step_3', 'Test step #3');
+    let expected = {
+      step_3: {
+        id: 'step_3',
+        content: 'Test step #3',
+        completed: false,
+        dateCompleted: null,
+        goalId: 'id_1'
+      }
+    };
+    expect(stepsById({}, action1)).toEqual(expected);
+
+    const state1 = stepsById(initialState, action1);
+    expected = {
+      ...initialState,
+      step_3: {
+        id: 'step_3',
+        content: 'Test step #3',
+        completed: false,
+        dateCompleted: null,
+        goalId: 'id_1'
+      }
+    };
+    expect(state1).toEqual(expected);
+
+    deepFreeze(state1);
+
+    const action2 = addStep('id_0', 'step_4', 'Test step #4');
+    const state2 = stepsById(state1, action2);
+    expected = {
+      ...state1,
+      step_4: {
+        id: 'step_4',
+        content: 'Test step #4',
+        completed: false,
+        dateCompleted: null,
+        goalId: 'id_0'
+      }
+    };
+    expect(state2).toEqual(expected);
+  });
+
+});
