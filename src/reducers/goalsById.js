@@ -22,12 +22,15 @@ function goal(state = {}, action) {
       if (state.id !== action.id) return state;
       return null;
     case EDIT_GOAL:
-      return state.id === action.id
-        ? {
+      return {
           ...state,
           [action.what]: action.how
-        }
-        : state;
+        };
+      case COMPLETE_GOAL:
+      return {
+          ...state,
+          completed: true
+        };
     default:
       return state;
   }
@@ -47,6 +50,13 @@ function goalsById(state = {}, action) {
         return newState;
       }, {});
     case EDIT_GOAL:
+      if (!(state[action.id])) return state;
+      return {
+        ...state,
+        [action.id]: goal(state[action.id], action)
+      };
+    case COMPLETE_GOAL:
+    if (!(state[action.id])) return state;
       return {
         ...state,
         [action.id]: goal(state[action.id], action)

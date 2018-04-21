@@ -1,6 +1,7 @@
 import createGoal from '../../actions/createGoal';
 import deleteGoal from '../../actions/deleteGoal';
 import editGoal from '../../actions/editGoal';
+import completeGoal from '../../actions/completeGoal';
 import goalsById from '../goalsById';
 import { deepFreeze, formattedDate } from '../../utils';
 
@@ -104,6 +105,10 @@ describe('`goalsById` reducer', () => {
   });
 
   it('should handle `EDIT_GOAL`', () => {
+    const actionNotFoundId = editGoal('not_found', 'name', 'test name');
+    const state = goalsById(initialState, actionNotFoundId);
+    expect(state).toEqual(initialState);
+
     const actionEditName = editGoal('id_0', 'name', 'new name new life');
     const stateEditName = goalsById(initialState, actionEditName);
     let expected = {
@@ -152,6 +157,27 @@ describe('`goalsById` reducer', () => {
       }
     };
     expect(stateEditDescription).toEqual(expected);
+  });
+
+  it('should handle `COMPLETE_GOAL`', () => {
+    const actionNotFoundId = completeGoal('not_found');
+    const stateNotFoundId = goalsById(initialState, actionNotFoundId);
+    expect(stateNotFoundId).toEqual(initialState);
+
+    const action = completeGoal('id_0');
+    const state = goalsById(initialState, action);
+    const expected = {
+      id_0: {
+        id: 'id_0',
+        name: 'Test goal',
+        dueDate: '11/11/2018',
+        steps: [],
+        completed: true,
+        dateCreated: '04/04/2018',
+        description: ''
+      }
+    };
+    expect(state).toEqual(expected);
   });
 
 });
