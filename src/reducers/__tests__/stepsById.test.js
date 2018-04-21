@@ -74,4 +74,28 @@ describe('`stepsByid` reducer', () => {
     expect(state2).toEqual(expected);
   });
 
+  it('should handle `REMOVE_STEP`', () => {
+    const actionNotFound = removeStep('id_0', 'not_found');
+    expect(stepsById(initialState, actionNotFound)).toEqual(initialState);
+
+    const action1 = removeStep('id_0', 'step_1');
+    const state1 = stepsById(initialState, action1);
+    let expected = {
+      step_2: {
+        id: 'step_2',
+        content: 'Test step #2',
+        completed: false,
+        dateCompleted: null,
+        goalId: 'id_0'
+      }
+    };
+    expect(state1).toEqual(expected);
+
+    deepFreeze(state1);
+
+    const action2 = removeStep('id_0', 'step_2');
+    const state2 = stepsById(state1, action2);
+    expect(state2).toEqual({});
+  });
+
 });
