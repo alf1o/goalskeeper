@@ -21,7 +21,7 @@ class Goal extends Component {
   }
 
   handleClick() {
-    this.setState(oldState => ({ expanded: !oldState.expanded }));
+    this.setState(prevState => ({ expanded: !prevState.expanded }));
   }
 
   componentDidMount() {

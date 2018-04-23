@@ -5,16 +5,14 @@ import GoalsList from './GoalsList';
 import CreateGoal from './CreateGoal';
 import Profile from './Profile';
 
-const Routes = ({ goalsById }) => (
+const Routes = () => (
   <Switch>
-    <Route exact={true} path="/" render={() => <GoalsList goalsById={goalsById} />} />
+    <Route exact={true} path="/" component={GoalsList} />
     <Route path="/creategoal" component={CreateGoal} />
     <Route path="/profile" component={Profile} />
   </Switch>
 );
 
-Routes.propTypes = {
-  goalsById: PropTypes.object.isRequired
-};
+Routes.propTypes = {};
 
 export default Routes;

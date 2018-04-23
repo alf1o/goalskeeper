@@ -23,15 +23,7 @@ describe('App', () => {
   }
 
   beforeEach(() => {
-    props = {
-      mockState: {
-        goalsById: {},
-        goals: [],
-        sortedBy: '',
-        goalsCompleted: [],
-        quoteOfTheDay: ''
-      }
-    };
+    props = {};
     mountedApp = undefined;
   });
 
@@ -69,11 +61,6 @@ describe('App', () => {
 
   it('should always render a `Routes`', () => {
     expect(app().find(Routes).length).toBe(1);
-  });
-  describe('the rendered `Routes`', () => {
-    it('should receive a `goalsById` prop', () => {
-      expect(app().find(Routes).props().goalsById).toBeDefined();
-    });
   });
 
   it('should always render a `Button`', () => {

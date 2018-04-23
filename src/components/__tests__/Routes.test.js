@@ -17,7 +17,7 @@ describe('Routes', () => {
     const routes = mount(
       <Provider store={store}>
         <MemoryRouter>
-          <Routes goalsById={{}} />
+          <Routes />
         </MemoryRouter>
       </Provider>
     );
@@ -30,7 +30,7 @@ describe('Routes', () => {
     const routes = mount(
       <Provider store={store}>
         <MemoryRouter initialEntries={['/creategoal']}>
-          <Routes goalsById={{}} />
+          <Routes />
         </MemoryRouter>
       </Provider>
     );
@@ -42,7 +42,7 @@ describe('Routes', () => {
   it('should render a `Profile` at the `/profile` path', () => {
     const routes = mount(
       <MemoryRouter initialEntries={['/profile']}>
-        <Routes goalsById={{}} />
+        <Routes />
       </MemoryRouter>
     );
     expect(routes.find(GoalsList).length).toBe(0);

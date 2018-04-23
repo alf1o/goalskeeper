@@ -14,9 +14,7 @@ import { connect } from 'react-redux';
 const MyLink = props => <Link to="/creategoal" {...props} />;
 
 class App extends Component {
-  static propTypes = {
-    mockState: PropTypes.object.isRequired
-  };
+  static propTypes = {};
 
   constructor() {
     super();
@@ -36,7 +34,6 @@ class App extends Component {
   }
 
   render() {
-    const { mockState } = this.props;
     const { drawerOpen } = this.state;
     return (
       <div>
@@ -45,7 +42,7 @@ class App extends Component {
           openDrawer={this.handleOpenDrawer}
         />
 
-        <Routes goalsById={mockState.goalsById} />
+        <Routes />
 
         <Button
           component={MyLink}
