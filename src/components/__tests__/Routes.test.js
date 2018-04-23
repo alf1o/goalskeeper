@@ -9,6 +9,8 @@ import Routes from '../Routes';
 import GoalsList from '../GoalsList';
 import CreateGoal from '../CreateGoal';
 import Profile from '../Profile';
+import { Provider } from 'react-redux';
+import store from '../../store';
 
 describe('Routes', () => {
   it('should render a `GoalsList` at the default path', () => {
@@ -20,9 +22,11 @@ describe('Routes', () => {
 
   it('should render a `CreateGoal` at the `/creategoal` path', () => {
     const routes = mount(
-      <MemoryRouter initialEntries={['/creategoal']}>
-        <Routes goalsById={{}} />
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter initialEntries={['/creategoal']}>
+          <Routes goalsById={{}} />
+        </MemoryRouter>
+      </Provider>
     );
     expect(routes.find(GoalsList).length).toBe(0);
     expect(routes.find(CreateGoal).length).toBe(1);

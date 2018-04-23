@@ -4,6 +4,7 @@ import { FormLabel } from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
 import Button from 'material-ui/Button';
+import { connect } from 'react-redux';
 
 class CreateGoal extends Component {
   static propTypes = {};
@@ -102,4 +103,5 @@ class CreateGoal extends Component {
   }
 }
 
-export default CreateGoal;
+export { CreateGoal as UnwrappedCreateGoal }
+export default connect()(CreateGoal);

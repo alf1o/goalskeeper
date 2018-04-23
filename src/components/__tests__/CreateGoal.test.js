@@ -4,7 +4,7 @@ Enzyme.configure({ adapter: new Adapter() });
 
 import React from 'react';
 import { shallow } from 'enzyme';
-import CreateGoal from '../CreateGoal';
+import { UnwrappedCreateGoal } from '../CreateGoal';
 import { FormLabel } from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
@@ -15,7 +15,7 @@ describe('CrateGoal', () => {
   let mountedCreateGoal;
 
   function createGoal() {
-    if (!mountedCreateGoal) mountedCreateGoal = shallow(<CreateGoal {...props} />);
+    if (!mountedCreateGoal) mountedCreateGoal = shallow(<UnwrappedCreateGoal {...props} />);
     return mountedCreateGoal;
   }
 
@@ -45,10 +45,10 @@ describe('CrateGoal', () => {
   });
 
   it('should have an `handleSubmit` method', () => {
-    expect(CreateGoal.prototype.handleSubmit).toBeDefined();
+    expect(UnwrappedCreateGoal.prototype.handleSubmit).toBeDefined();
   });
   describe('the `handleSubmit` method', () => {
-    const handleSubmitSpy = jest.spyOn(CreateGoal.prototype, 'handleSubmit');
+    const handleSubmitSpy = jest.spyOn(UnwrappedCreateGoal.prototype, 'handleSubmit');
     afterEach(() => {
       handleSubmitSpy.mockClear();
     });
@@ -115,11 +115,11 @@ describe('CrateGoal', () => {
   });
 
   it('should have an `handleChange` method', () => {
-    expect(CreateGoal.prototype.handleChange).toBeDefined();
-    const handleChangeSpy = jest.spyOn(CreateGoal.prototype, 'handleChange');
+    expect(UnwrappedCreateGoal.prototype.handleChange).toBeDefined();
+    const handleChangeSpy = jest.spyOn(UnwrappedCreateGoal.prototype, 'handleChange');
   });
   describe('the `handleChange` method', () => {
-    const handleChangeSpy = jest.spyOn(CreateGoal.prototype, 'handleChange');
+    const handleChangeSpy = jest.spyOn(UnwrappedCreateGoal.prototype, 'handleChange');
     afterEach(() => {
       handleChangeSpy.mockClear();
     });
@@ -160,10 +160,10 @@ describe('CrateGoal', () => {
   });
 
   it('should have an `handleClick` method', () => {
-    expect(CreateGoal.prototype.handleClick).toBeDefined();
+    expect(UnwrappedCreateGoal.prototype.handleClick).toBeDefined();
   });
   describe('the `handleClick` method', () => {
-    const handleClickSpy = jest.spyOn(CreateGoal.prototype, 'handleClick');
+    const handleClickSpy = jest.spyOn(UnwrappedCreateGoal.prototype, 'handleClick');
     afterEach(() => {
       handleClickSpy.mockClear();
     });
