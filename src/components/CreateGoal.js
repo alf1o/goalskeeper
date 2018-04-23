@@ -14,7 +14,6 @@ class CreateGoal extends Component {
     this.state = {
       'goal-name': '',
       'due-date': '',
-      'first-step': '',
       'description': ''
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -70,16 +69,6 @@ class CreateGoal extends Component {
         <FormLabel component="legend">Optional</FormLabel>
         <TextField
           error={false}
-          id="first-step"
-          label="First step: "
-          margin="normal"
-          name="first-step"
-          onChange={evt => this.handleChange(evt, 'first-step')}
-          placeholder="Add the first step for this goal"
-          value={this.state['first-step']}
-        />
-        <TextField
-          error={false}
           id="description"
           label="Description: "
           margin="normal"
@@ -95,12 +84,17 @@ class CreateGoal extends Component {
           color="primary"
           style={{margin: 'auto'}}
           onClick={this.handleClick}
+          disabled={!(this.state['goal-name'] && this.state['due-date'])}
         >
           Create
         </Button>
       </form>
     );
   }
+}
+
+function mapDispatchToProps(dispatch) {
+
 }
 
 export { CreateGoal as UnwrappedCreateGoal }

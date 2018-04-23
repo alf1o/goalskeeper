@@ -60,9 +60,9 @@ describe('CrateGoal', () => {
     });
   });
 
-  it('should render 4 `TextField`s', () => {
+  it('should render 3 `TextField`s', () => {
     const textFields = createGoal().find(TextField);
-    expect(textFields.length).toBe(4);
+    expect(textFields.length).toBe(3);
   });
   describe('the rendered `TextField`s', () => {
     it('should receive an `error` prop', () => {
@@ -95,6 +95,50 @@ describe('CrateGoal', () => {
       const btn = createGoal().find(Button);
       expect(btn.props().onClick).toBeDefined();
     });
+    it('should have a `disabled` prop', () => {
+      const btn = createGoal().find(Button);
+      expect(btn.props().disabled).toBeDefined();
+    });
+    describe('the `disabled` prop', () => {
+      it('should be set to `true` when one of the required input fields is empty', () => {
+        let state = {
+          'goal-name': '',
+          'due-date': '',
+          'description': ''
+        };
+        createGoal().setState(state);
+        let btn = createGoal().find(Button);
+        expect(btn.props().disabled).toBe(true);
+
+        state = {
+          'goal-name': 'test',
+          'due-date': '',
+          'description': ''
+        };
+        createGoal().setState(state);
+        btn = createGoal().find(Button);
+        expect(btn.props().disabled).toBe(true);
+
+        state = {
+          'goal-name': '',
+          'due-date': 'test',
+          'description': ''
+        };
+        createGoal().setState(state);
+        btn = createGoal().find(Button);
+        expect(btn.props().disabled).toBe(true);
+      });
+      it('should be set to `false` when the required input fields are not empty', () => {
+        const state = {
+          'goal-name': 'test',
+          'due-date': 'test',
+          'description': ''
+        };
+        createGoal().setState(state);
+        const btn = createGoal().find(Button);
+        expect(btn.props().disabled).toBe(false);
+      });
+    });
   });
 
   it(`should have a state['goal-name'] property`, () => {
@@ -104,10 +148,6 @@ describe('CrateGoal', () => {
   it(`should have a state['due-date'] property`, () => {
     const dueDate = createGoal().state()['due-date'];
     expect(dueDate).toBeDefined();
-  });
-  it(`should have a state['first-step'] property`, () => {
-    const firstStep = createGoal().state()['first-step'];
-    expect(firstStep).toBeDefined();
   });
   it(`should have a state['description'] property`, () => {
     const desc = createGoal().state()['description'];
@@ -127,14 +167,13 @@ describe('CrateGoal', () => {
     it('should be called by each `TextField` passing the input name', () => {
       const textFields = createGoal().find(TextField);
       textFields.forEach(field => field.simulate('change', { target: {value: ''} }, field.props().name));
-      expect(handleChangeSpy.mock.calls.length).toBe(4);
+      expect(handleChangeSpy.mock.calls.length).toBe(3);
     });
 
     it('should call update the state at the `[name]` property', () => {
       let state = {
         'goal-name': '',
         'due-date': '',
-        'first-step': '',
         'description': ''
       };
       expect(createGoal().state()).toMatchObject(state);
@@ -143,14 +182,12 @@ describe('CrateGoal', () => {
       state = {
         'goal-name': 'test',
         'due-date': 'test',
-        'first-step': 'test',
         'description': 'test'
       },
       expect(createGoal().state()).toMatchObject(state);
       state = {
         'goal-name': 'test_2',
         'due-date': 'test',
-        'first-step': 'test',
         'description': 'test'
       };
       const goalNameField = textFields.first();
