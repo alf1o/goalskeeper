@@ -35,12 +35,6 @@ describe('App', () => {
     mountedApp = undefined;
   });
 
-  it('renders without crashing', () => {
-    const div = document.createElement('div');
-    ReactDOM.render(<MemoryRouter><UnwrappedApp {...props} /></MemoryRouter>, div);
-    ReactDOM.unmountComponentAtNode(div);
-  });
-
   it('should always render a `div`', () => {
     const divs = app().find('div');
     expect(divs.length).toBeGreaterThan(0);

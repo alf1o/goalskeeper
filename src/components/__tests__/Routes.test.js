@@ -14,7 +14,13 @@ import store from '../../store';
 
 describe('Routes', () => {
   it('should render a `GoalsList` at the default path', () => {
-    const routes = mount(<MemoryRouter><Routes goalsById={{}} /></MemoryRouter>);
+    const routes = mount(
+      <Provider store={store}>
+        <MemoryRouter>
+          <Routes goalsById={{}} />
+        </MemoryRouter>
+      </Provider>
+    );
     expect(routes.find(GoalsList).length).toBe(1);
     expect(routes.find(CreateGoal).length).toBe(0);
     expect(routes.find(Profile).length).toBe(0);
