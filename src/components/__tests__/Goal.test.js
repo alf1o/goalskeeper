@@ -4,7 +4,7 @@ Enzyme.configure({ adapter: new Adapter() });
 
 import React from 'react';
 import { shallow } from 'enzyme';
-import Goal from '../Goal';
+import { UnwrappedGoal } from '../Goal';
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
@@ -16,7 +16,7 @@ describe('Goal', () => {
   let mountedGoal;
 
   function mountGoal() {
-    if (!mountedGoal) mountedGoal = shallow(<Goal {...props} />);
+    if (!mountedGoal) mountedGoal = shallow(<UnwrappedGoal {...props} />);
     return mountedGoal;
   }
 
@@ -25,8 +25,24 @@ describe('Goal', () => {
       goal: {
         id: 'goal_0',
         name: 'Test goal 0',
-        steps: [{ completed: true }, { completed: true }]
-      }
+        steps: ['step_1', 'step_2']
+      },
+      steps: [
+        {
+          id: 'step_1',
+          content: 'test step 1',
+          completed: false,
+          dateCompleted: null,
+          goalId: 'goal_0'
+        },
+        {
+          id: 'step_2',
+          content: 'test step 2',
+          completed: false,
+          dateCompleted: null,
+          goalId: 'goal_0'
+        }
+      ]
     };
     mountedGoal = undefined;
   });
@@ -94,20 +110,13 @@ describe('Goal', () => {
   });
 
   it('should call `componentDidMount` once', () => {
-    const componentDidMountSpy = jest.spyOn(Goal.prototype, 'componentDidMount');
+    const componentDidMountSpy = jest.spyOn(UnwrappedGoal.prototype, 'componentDidMount');
     mountGoal();
     expect(componentDidMountSpy.mock.calls.length).toBe(1);
   });
 
-  it('should update `state` correctly when `goal.steps` is not empty', () => {
-    props = {
-      goal: {
-        id: 'goal_0',
-        label: 'Test goal 0',
-        steps: [{ completed: true }, { completed: true }, { completed: false}]
-      }
-    };
-    const { steps } = props.goal;
+  it('should update `state` correctly when `steps` is not empty', () => {
+    const steps = mountGoal().instance().props.steps;
     const actual = steps.filter(step => step.completed).length / steps.length * 100;
     expect(mountGoal().state().progress).toBeCloseTo(actual);
   });
@@ -126,12 +135,12 @@ describe('Goal', () => {
   });
 
   it('should have an `handleClick` method', () => {
-    expect(Goal.prototype.handleClick).toBeDefined();
+    expect(UnwrappedGoal.prototype.handleClick).toBeDefined();
   });
   describe('`handleClick`', () => {
     let handleClickSpy;
     beforeEach(() => {
-      handleClickSpy = jest.spyOn(Goal.prototype, 'handleClick');
+      handleClickSpy = jest.spyOn(UnwrappedGoal.prototype, 'handleClick');
     });
     afterEach(() => {
       handleClickSpy.mockClear();
@@ -156,7 +165,7 @@ describe('Goal', () => {
     it('should render a `GoalInfo`', () => {
       expect(mountGoal().find(GoalInfo).length).toBe(1);
     });
-    it('should pass `goal.steps` as prop to the rendered `GoalInfo`', () => {
+    it('should pass `steps` as prop to the rendered `GoalInfo`', () => {
       const goalInfo = mountGoal().find(GoalInfo);
       expect(goalInfo.props().steps).toBeDefined();
     });

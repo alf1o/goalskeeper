@@ -5,10 +5,12 @@ import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
 import GoalInfo from './GoalInfo';
 import { LinearProgress } from 'material-ui/Progress';
+import { connect } from 'react-redux';
 
 class Goal extends Component {
   static propTypes = {
-    goal: PropTypes.object.isRequired
+    goal: PropTypes.object.isRequired,
+    steps: PropTypes.array.isRequired
   };
 
   constructor() {
@@ -25,7 +27,7 @@ class Goal extends Component {
   }
 
   componentDidMount() {
-    const { steps } = this.props.goal;
+    const { steps } = this.props;
     if (steps.length) {
       const progress = steps.filter(step => step.completed).length / steps.length * 100;
       this.setState({ progress });
@@ -33,7 +35,7 @@ class Goal extends Component {
   }
 
   render() {
-    const { goal } = this.props;
+    const { goal, steps } = this.props;
     const { expanded, progress } = this.state;
     return (
       <div>
@@ -45,11 +47,18 @@ class Goal extends Component {
           </ListItemIcon>
           <ListItemText inset primary={goal.name} secondary={'Due: ' + goal.dueDate} />
         </ListItem>
-        {expanded && <GoalInfo steps={goal.steps} />}
+        {expanded && <GoalInfo steps={steps} />}
         <LinearProgress variant='determinate' value={progress} />
       </div>
     );
   }
 }
 
-export default Goal;
+function mapStateToProps(state, ownProps) {
+  return {
+    steps: ownProps.goal.steps.map(stepId => state.stepsById[stepId])
+  };
+}
+
+export { Goal as UnwrappedGoal };
+export default connect(mapStateToProps)(Goal);
