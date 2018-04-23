@@ -2,6 +2,7 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { createLogger } from 'redux-logger';
 import goalsById from './reducers/goalsById';
 import stepsById from './reducers/stepsById';
+import goals from './reducers/goals';
 
 // If Redux DevTools extension is available, use it.
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -12,7 +13,8 @@ const logger = createLogger({
 
 const reducer = combineReducers({
   goalsById,
-  stepsById
+  stepsById,
+  goals
 });
 
 const store = createStore(

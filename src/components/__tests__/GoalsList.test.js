@@ -4,10 +4,10 @@ Enzyme.configure({ adapter: new Adapter() });
 
 import React from 'react';
 import { shallow } from 'enzyme';
-import GoalsList from '../GoalsList';
+import { UnwrappedGoalsList } from '../GoalsList';
 import Paper from 'material-ui/Paper';
 import List from 'material-ui/List';
-// import ListSubheader from 'material-ui/List/ListSubheader';
+import ListSubheader from 'material-ui/List/ListSubheader';
 import Goal from '../Goal';
 
 describe('GoalsList', () => {
@@ -15,13 +15,13 @@ describe('GoalsList', () => {
   let mountedGoalsList;
 
   function goalsList() {
-    if (!mountedGoalsList) mountedGoalsList = shallow(<GoalsList {...props} />);
+    if (!mountedGoalsList) mountedGoalsList = shallow(<UnwrappedGoalsList {...props} />);
     return mountedGoalsList;
   }
 
   beforeEach(() => {
     props = {
-      goalsById: {}
+      goals: []
     };
     mountedGoalsList = undefined;
   });
@@ -35,43 +35,36 @@ describe('GoalsList', () => {
     });
   });
 
-  // it('should render a `ListSubheader`', () => {
-  //   expect(goalsList().find(ListSubheader).length).toBe(1);
-  // });
+  it('should render a `ListSubheader` when `goals.length` is `0`', () => {
+    expect(goalsList().find(ListSubheader).length).toBe(1);
+  });
 
-  it('should always render a `List`', () => {
+  it('should render a `List` when `goals.length` is greater than `0`', () => {
+    goalsList().setProps({ goals: [{ id: 'id_0' }] })
     expect(goalsList().find(List).length).toBe(1);
   });
   describe('the rendered `List`', () => {
-    describe('should display a `Goal` for each element in `goalsById`', () => {
-      it('should display 0 elements for an empty object', () => {
-        const goals = goalsList().find(List).find(Goal);
-        expect(goals.length).toBe(0);
-      });
+    describe('should display a `Goal` for each element in `goals`', () => {
       it('should display 1 element for an object of 1 element', () => {
         props = {
-          goalsById: {
-            'goal_0': {
-              id: 'goal_0',
-              steps: []
-            }
-          }
+          goals: [{
+            id: 'goal_0',
+            steps: []
+          }]
         };
         const goals = goalsList().find(List).find(Goal);
         expect(goals.length).toBe(1);
       });
       it('should display 2 elements for an object of 2 elements', () => {
         props = {
-          goalsById: {
-            'goal_0': {
-              id: 'goal_0',
-              steps: [{ completed: false }]
-            },
-            'goal_1': {
-              id: 'goal_1',
-              steps: [{ completed: true }, { completed: false }]
-            }
-          }
+          goals: [{
+            id: 'goal_0',
+            steps: ['step_1']
+          },
+          {
+            id: 'goal_1',
+            steps: ['step_1', 'step_2']
+          }]
         };
         const goals = goalsList().find(List).find(Goal);
         expect(goals.length).toBe(2);

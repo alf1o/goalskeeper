@@ -2,32 +2,43 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import List from 'material-ui/List';
-// import ListSubheader from 'material-ui/List/ListSubheader';
+import ListSubheader from 'material-ui/List/ListSubheader';
 import Goal from './Goal';
 // import DateRange from 'material-ui/icons/DateRange';
+import { connect } from 'react-redux';
 
 class GoalsList extends Component {
   static propTypes = {
-    goalsById: PropTypes.object.isRequired
+    goals: PropTypes.array.isRequired
   };
 
   render() {
-    const { goalsById } = this.props;
-    const goalsList = Object.values(goalsById);
+    const { goals } = this.props;
     return (
       <Paper style={{marginTop: '56px'}}>
-        {/*<ListSubheader>{goalsList.length ? 'Your Goals' : `No goals yet? Let's add one!`}</ListSubheader>*/}
-        <List component="ul" style={{ marginTop: 56 }}>
-          {goalsList.map(goal => (
-            <Goal
-              key={goal.id}
-              goal={goal}
-            />
-          ))}
-        </List>
+        {goals.length
+          ? (
+            <List component="ul" style={{ marginTop: 56 }}>
+              {goals.map(goal => (
+                <Goal
+                  key={goal.id}
+                  goal={goal}
+                />
+              ))}
+            </List>
+          )
+          : <ListSubheader>No goals yet? <br /> Click the button at the bottom to add one!</ListSubheader>
+        }
       </Paper>
     );
   }
 }
 
-export default GoalsList;
+function mapStateToProps(state) {
+  return {
+    goals: state.goals.map(goalId => state.goalsById[goalId])
+  };
+}
+
+export { GoalsList as UnwrappedGoalsList };
+export default connect(mapStateToProps)(GoalsList);
