@@ -24,7 +24,7 @@ describe('Goal', () => {
     props = {
       goal: {
         id: 'goal_0',
-        label: 'Test goal 0',
+        name: 'Test goal 0',
         steps: [{ completed: true }, { completed: true }]
       }
     };
@@ -58,9 +58,9 @@ describe('Goal', () => {
         expect(listItem.find(ListItemText).length).toBe(1);
       });
       describe('the rendered `ListItemText`', () => {
-        it('should receive a `primary` prop with the value of `goal.label`', () => {
+        it('should receive a `primary` prop with the value of `goal.name`', () => {
           const listText = listItem.find(ListItemText);
-          const actual = mountGoal().instance().props.goal.label;
+          const actual = mountGoal().instance().props.goal.name;
           expect(listText.props().primary).toEqual(actual);
         });
         it('should receive a `scondary` prop with the value of `goal.dueDate`', () => {
