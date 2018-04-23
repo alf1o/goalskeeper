@@ -7,6 +7,7 @@ import Button from 'material-ui/Button';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import createGoal from '../actions/createGoal';
+import uniqid from 'uniqid';
 
 class CreateGoal extends Component {
   static propTypes = {
@@ -36,7 +37,8 @@ class CreateGoal extends Component {
 
   handleClick() {
     const { createGoal } = this.props;
-    createGoal('id_0', this.state['goal-name'], this.state['due-date'], this.state['description']);
+    const [ id, name, date, desc ] = [uniqid('goal-'), this.state['goal-name'], this.state['due-date'], this.state['description']];
+    createGoal(id, name, date, desc);
     console.log('give feedback');
     this.setState({
       'goal-name': '',
