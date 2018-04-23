@@ -110,5 +110,5 @@ const mapDispatchToProps = {
   createGoal
 };
 
-export { CreateGoal as UnwrappedCreateGoal }
+export { CreateGoal as UnwrappedCreateGoal };
 export default connect(null, mapDispatchToProps)(CreateGoal);
