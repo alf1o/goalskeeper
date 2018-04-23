@@ -4,17 +4,22 @@ import { FormLabel } from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
 import Button from 'material-ui/Button';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import createGoal from '../actions/createGoal';
 
 class CreateGoal extends Component {
-  static propTypes = {};
+  static propTypes = {
+    createGoal: PropTypes.func.isRequired
+  };
 
   constructor() {
     super();
     this.state = {
       'goal-name': '',
       'due-date': '',
-      'description': ''
+      'description': '',
+      toHome: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -30,13 +35,21 @@ class CreateGoal extends Component {
   }
 
   handleClick() {
-    console.log('create the goal');
+    const { createGoal } = this.props;
+    createGoal('id_0', this.state['goal-name'], this.state['due-date'], this.state['description']);
     console.log('give feedback');
-    console.log('route home');
+    this.setState({
+      'goal-name': '',
+      'due-date': '',
+      'description': '',
+      toHome: true
+    });
   }
 
   render() {
-    return (
+    return this.state.toHome
+    ? <Redirect to="/" />
+    : (
       <form
         onSubmit={this.handleSubmit}
         style={{display: 'flex', flexDirection: 'column', marginTop: '56px'}}
@@ -93,9 +106,9 @@ class CreateGoal extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-
-}
+const mapDispatchToProps = {
+  createGoal
+};
 
 export { CreateGoal as UnwrappedCreateGoal }
-export default connect()(CreateGoal);
+export default connect(null, mapDispatchToProps)(CreateGoal);

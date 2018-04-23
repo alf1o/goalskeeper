@@ -9,6 +9,7 @@ import { FormLabel } from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
 import Button from 'material-ui/Button';
+import { Redirect } from 'react-router-dom';
 
 describe('CrateGoal', () => {
   let props;
@@ -20,7 +21,9 @@ describe('CrateGoal', () => {
   }
 
   beforeEach(() => {
-    props = {};
+    props = {
+      createGoal: jest.fn()
+    };
     mountedCreateGoal = undefined;
   });
 
@@ -141,6 +144,7 @@ describe('CrateGoal', () => {
     });
   });
 
+  // State
   it(`should have a state['goal-name'] property`, () => {
     const goalName = createGoal().state()['goal-name'];
     expect(goalName).toBeDefined();
@@ -152,6 +156,10 @@ describe('CrateGoal', () => {
   it(`should have a state['description'] property`, () => {
     const desc = createGoal().state()['description'];
     expect(desc).toBeDefined();
+  });
+  it('should have a `state.toHome` property', () => {
+    const toHome = createGoal().state().toHome;
+    expect(toHome).toBeDefined();
   });
 
   it('should have an `handleChange` method', () => {
@@ -174,7 +182,8 @@ describe('CrateGoal', () => {
       let state = {
         'goal-name': '',
         'due-date': '',
-        'description': ''
+        'description': '',
+        toHome: false
       };
       expect(createGoal().state()).toMatchObject(state);
       const textFields = createGoal().find(TextField);
@@ -182,13 +191,15 @@ describe('CrateGoal', () => {
       state = {
         'goal-name': 'test',
         'due-date': 'test',
-        'description': 'test'
+        'description': 'test',
+        toHome: false
       },
       expect(createGoal().state()).toMatchObject(state);
       state = {
         'goal-name': 'test_2',
         'due-date': 'test',
-        'description': 'test'
+        'description': 'test',
+        toHome: false
       };
       const goalNameField = textFields.first();
       goalNameField.simulate('change', { target: {value: 'test_2'} }, goalNameField.props().name);
@@ -210,9 +221,31 @@ describe('CrateGoal', () => {
       btn.simulate('click');
       expect(handleClickSpy.mock.calls.length).toBe(1);
     });
+
+    it('should dispatch an action by calling the `createGoal` prop', () => {
+      const btn = createGoal().find(Button);
+      btn.simulate('click');
+      expect(createGoal().instance().props.createGoal.mock.calls.length).toBe(1);
+    });
+
+    it('should clear the `state` and set `toHome` to true', () => {
+      const state = {
+        'goal-name': '',
+        'due-date': '',
+        'description': '',
+        toHome: true
+      };
+      const btn = createGoal().find(Button);
+      btn.simulate('click');
+      expect(createGoal().state()).toEqual(state);
+    });
+
+    it('should render a `Redirect` when `state.toHome` is `true`', () => {
+      createGoal().setState({ toHome: true });
+      expect(createGoal().find(Redirect).length).toBe(1);
+    });
   });
 
   // TODO: test `error` prop
-  // TODO: test `Button` disabled
 
 });
