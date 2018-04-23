@@ -40,8 +40,9 @@ describe('Header', () => {
   });
 
   it('should call the `openDrawer` prop when `IconButton` is clicked', () => {
-    header().find(IconButton).simulate('click');
-    expect(header().instance().props.openDrawer.mock.calls.length).toBe(1);
+    const iconBtn = header().find(IconButton);
+    iconBtn.simulate('click');
+    expect(iconBtn.props().onClick.mock.calls.length).toBe(1);
   });
 
 });
