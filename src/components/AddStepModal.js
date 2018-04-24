@@ -6,33 +6,50 @@ import Typography from 'material-ui/Typography';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import addStep from '../actions/addStep';
+import uniqid from 'uniqid';
 
 class AddStepModal extends Component {
   static propTypes = {
+    goalId: PropTypes.string.isRequired,
     open: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired
+    onClose: PropTypes.func.isRequired,
+    addStep: PropTypes.func.isRequired
   };
 
   constructor() {
     super();
     this.state = {
-      content: ''
+      content: '',
+      toHome: false
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange(evt) {
     this.setState({ content: evt.target.value });
   }
 
-  render() {
+  handleClick() {
+    const { goalId, addStep } = this.props;
     const { content } = this.state;
+    addStep(goalId, uniqid('step-'), content);
+    // close the modal
+    this.setState({ toHome: true });
+  }
+
+  render() {
+    const { content, toHome } = this.state;
     const { open, onClose } = this.props;
-    return (
+    return toHome
+    ? <Redirect to="/" />
+    : (
       <Modal
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
+        aria-labelledby="add-step-modal"
+        aria-describedby="add a new step for a specific goal"
         open={open}
         onClose={onClose}
       >
@@ -54,7 +71,7 @@ class AddStepModal extends Component {
             variant="raised"
             color="primary"
             style={{margin: 'auto'}}
-            onClick={() => alert('Add')}
+            onClick={this.handleClick}
             disabled={!content}
           >
             Add
@@ -65,5 +82,9 @@ class AddStepModal extends Component {
   }
 }
 
+const mapDispatchToProps = {
+  addStep
+};
+
 export { AddStepModal as UnwrappedAddStepModal };
-export default AddStepModal;
+export default connect(null, mapDispatchToProps)(AddStepModal);
