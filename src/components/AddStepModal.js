@@ -5,7 +5,6 @@ import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import addStep from '../actions/addStep';
 import uniqid from 'uniqid';
@@ -21,8 +20,7 @@ class AddStepModal extends Component {
   constructor() {
     super();
     this.state = {
-      content: '',
-      toHome: false
+      content: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -34,19 +32,17 @@ class AddStepModal extends Component {
   }
 
   handleClick() {
-    const { goalId, addStep } = this.props;
+    const { goalId, addStep, onClose } = this.props;
     const { content } = this.state;
     addStep(goalId, uniqid('step-'), content);
-    // close the modal
-    this.setState({ toHome: true });
+    onClose();
+    this.setState({ content: '' });
   }
 
   render() {
-    const { content, toHome } = this.state;
+    const { content } = this.state;
     const { open, onClose } = this.props;
-    return toHome
-    ? <Redirect to="/" />
-    : (
+    return (
       <Modal
         aria-labelledby="add-step-modal"
         aria-describedby="add a new step for a specific goal"

@@ -11,7 +11,6 @@ import Typography from 'material-ui/Typography';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import Card from 'material-ui/Card';
-import { Redirect } from 'react-router-dom';
 import uniqid from 'uniqid';
 
 describe('`AddStepModal`', () => {
@@ -106,20 +105,6 @@ describe('`AddStepModal`', () => {
     });
   });
 
-  it('should have a `state.toHome` property', () => {
-    expect(addStepModal().state().toHome).toBeDefined();
-  });
-  describe('when `state.toHome` is `true`', () => {
-    beforeEach(() => {
-      addStepModal().setState({ toHome: true });
-    });
-
-    it('should render a `Redirect` to `'/'`', () => {
-      const content = <Redirect to="/" />;
-      expect(addStepModal().contains(content)).toBe(true);
-    });
-  });
-
   it('should have an `handleChange` method', () => {
     expect(UnwrappedAddStepModal.prototype.handleChange).toBeDefined();
   });
@@ -171,10 +156,19 @@ describe('`AddStepModal`', () => {
       expect(addStepSpy.mock.calls[0][2]).toEqual(content);
     });
 
-    it('should set `state.toHome` to `true`', () => {
+    it('should call the `onClose` prop', () => {
       const btn = addStepModal().find(Button);
       btn.simulate('click');
-      expect(addStepModal().state().toHome).toBe(true);
+      const onClose = addStepModal().instance().props.onClose;
+      expect(onClose.mock.calls.length).toBe(1);
+    });
+
+    it('should clear `state.content`', () => {
+      addStepModal().setState({ content: 'test' });
+
+      const btn = addStepModal().find(Button);
+      btn.simulate('click');
+      expect(addStepModal().state().content).toBe('');
     });
   });
 

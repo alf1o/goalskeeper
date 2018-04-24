@@ -9,6 +9,7 @@ import Paper from 'material-ui/Paper';
 import List from 'material-ui/List';
 import Step from '../Step';
 import Button from 'material-ui/Button';
+import AddStepModal from '../AddStepModal';
 
 describe('GoalInfo', () => {
   let props = {};
@@ -21,7 +22,8 @@ describe('GoalInfo', () => {
 
   beforeEach(() => {
     props = {
-      steps: [{ completed: true, id: '0' }, { completed: false, id: '1' }]
+      steps: [{ completed: true, id: '0' }, { completed: false, id: '1' }],
+      goalId: 'id_0'
     };
     mountedGoalInfo = undefined;
   });
@@ -59,6 +61,52 @@ describe('GoalInfo', () => {
     });
     it('should receive a `onClick` prop', () => {
       expect(flatBtn.props().onClick).toBeDefined();
+    });
+  });
+
+  it('should have an `state.modalOpen` property', () => {
+    expect(goalInfo().state().modalOpen).toBeDefined();
+  });
+
+  it('should have an `handleModalOpen` method', () => {
+    expect(GoalInfo.prototype.handleModalOpen).toBeDefined();
+  });
+  describe('the `handleModalOpen` method', () => {
+    const handleModalOpenSpy = jest.spyOn(GoalInfo.prototype, 'handleModalOpen');
+    afterEach(() => {
+      handleModalOpenSpy.mockClear();
+    });
+
+    it('should be called on `Button` click', () => {
+      expect(handleModalOpenSpy.mock.calls.length).toBe(0);
+
+      const btn = goalInfo().find(Button);
+      btn.simulate('click');
+      expect(handleModalOpenSpy.mock.calls.length).toBe(1);
+    });
+
+    it('should set `state.modalOpen` to `true`', () => {
+      expect(goalInfo().state().modalOpen).toBe(false);
+
+      const btn = goalInfo().find(Button);
+      btn.simulate('click');
+      expect(goalInfo().state().modalOpen).toBe(true);
+    });
+  });
+
+  it('should have an `handleModalClose` method', () => {
+    expect(GoalInfo.prototype.handleModalClose).toBeDefined();
+  });
+  describe('the `handleModalClose` method', () => {
+    const handleModalCloseSpy = jest.spyOn(GoalInfo.prototype, 'handleModalClose');
+    afterEach(() => {
+      handleModalCloseSpy.mockClear();
+    });
+
+    it('should set `state.modalOpen` to `false`', () => {
+      goalInfo().setState({ modalOpen: true });
+      goalInfo().instance().handleModalClose();
+      expect(goalInfo().state().modalOpen).toBe(false);
     });
   });
 

@@ -47,7 +47,7 @@ class Goal extends Component {
           </ListItemIcon>
           <ListItemText inset primary={goal.name} secondary={'Due: ' + goal.dueDate} />
         </ListItem>
-        {expanded && <GoalInfo steps={steps} />}
+        {expanded && <GoalInfo steps={steps} goalId={goal.id} />}
         <LinearProgress variant='determinate' value={progress} />
       </div>
     );
