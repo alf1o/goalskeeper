@@ -1,9 +1,10 @@
 import { COMPLETE_STEP } from './types';
 
-function completeStep(id) {
+function completeStep(id, completed) {
   return {
     type: COMPLETE_STEP,
-    id
+    id,
+    completed
   };
 }
 
@@ -12,6 +13,7 @@ export default completeStep;
 /*
   {
     type,
-    id
+    id,
+    completed
   }
 */

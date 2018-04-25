@@ -6,9 +6,10 @@ describe('`completeStep` action creator', () => {
     const id = 'step_1';
     const action = {
       type: COMPLETE_STEP,
-      id
+      id,
+      completed: true
     };
-    expect(completeStep(id)).toMatchObject(action);
+    expect(completeStep(id, true)).toMatchObject(action);
   });
 
 });

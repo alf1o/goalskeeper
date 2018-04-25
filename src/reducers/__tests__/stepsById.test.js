@@ -2,7 +2,7 @@ import addStep from '../../actions/addStep';
 import removeStep from '../../actions/removeStep';
 import completeStep from '../../actions/completeStep';
 import stepsById from '../stepsById';
-import { deepFreeze } from '../../utils';
+import { deepFreeze, formattedDate } from '../../utils';
 
 describe('`stepsByid` reducer', () => {
   const initialState = {
@@ -99,13 +99,13 @@ describe('`stepsByid` reducer', () => {
   });
 
   it('should handle `COMPLETE_STEP`', () => {
-    const actionNotFoundId = completeStep('not_found');
+    const actionNotFoundId = completeStep('not_found', true);
     const stateNotFoundId = stepsById(initialState, actionNotFoundId);
     expect(stateNotFoundId).toEqual(initialState);
 
-    const action = completeStep('step_2');
+    const action = completeStep('step_2', true);
     const state = stepsById(initialState, action);
-    const expected = {
+    let expected = {
       step_1: {
         id: 'step_1',
         content: 'Test step #1',
@@ -117,11 +117,33 @@ describe('`stepsByid` reducer', () => {
         id: 'step_2',
         content: 'Test step #2',
         completed: true,
-        dateCompleted: null,
+        dateCompleted: formattedDate(),
         goalId: 'id_0'
       }
     };
     expect(state).toEqual(expected);
+
+    deepFreeze(state);
+
+    const action2 = completeStep('step_2', false);
+    const state2 = stepsById(state, action2);
+    expected = {
+      step_1: {
+        id: 'step_1',
+        content: 'Test step #1',
+        completed: false,
+        dateCompleted: null,
+        goalId: 'id_0'
+      },
+      step_2: {
+        id: 'step_2',
+        content: 'Test step #2',
+        completed: false,
+        dateCompleted: null,
+        goalId: 'id_0'
+      }
+    };
+    expect(expected).toEqual(state2);
   });
 
 });

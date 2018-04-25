@@ -1,4 +1,5 @@
 import { ADD_STEP, REMOVE_STEP, COMPLETE_STEP } from '../actions/types';
+import { formattedDate } from '../utils';
 
 function step(state = {}, action) {
   switch(action.type) {
@@ -16,7 +17,8 @@ function step(state = {}, action) {
     case COMPLETE_STEP:
       return {
         ...state,
-        completed: true
+        completed: action.completed,
+        dateCompleted: (action.completed ? formattedDate() : null)
       };
     default:
       return state;

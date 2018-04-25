@@ -29,7 +29,7 @@ class Step extends Component {
   handleClick() {
     const { step, completeStep } = this.props;
     this.setState(oldState => ({ completed: !oldState.completed }));
-    completeStep(step.id, this.state.completed);
+    completeStep(step.id, !this.state.completed);
   }
 
   render() {
