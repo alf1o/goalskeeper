@@ -4,7 +4,7 @@ import Paper from 'material-ui/Paper';
 import List from 'material-ui/List';
 import ListSubheader from 'material-ui/List/ListSubheader';
 import Goal from './Goal';
-// import DateRange from 'material-ui/icons/DateRange';
+// import DateRange from '@material-ui/icons/DateRange';
 import { connect } from 'react-redux';
 
 class GoalsList extends Component {

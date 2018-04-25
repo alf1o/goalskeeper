@@ -17,8 +17,77 @@ const reducer = combineReducers({
   goals
 });
 
+const initialState = {
+  goalsById: {
+    'id_0': {
+      id: 'id_0',
+      name: 'Finish app logic',
+      dueDate: '01/05/2018',
+      steps: [
+        'step_0_1',
+        'step_0_2',
+        'step_0_3'
+      ],
+      completed: true,
+      dateCreated: '04/04/2018',
+      description: ''
+    },
+    'id_1': {
+      id: 'id_1',
+      name: 'Style the app',
+      dueDate: '08/05/2018',
+      steps: [
+        'step_1_1',
+        'step_1_2'
+      ],
+      completed: false,
+      dateCreated: '04/04/2018',
+      description: ''
+    }
+  },
+  stepsById: {
+    'step_0_1': {
+      id: 'step_0_1',
+      content: 'Add react-router-dom',
+      completed: true,
+      dateCompleted: '20/04/2018',
+      goalId: 'id_0'
+    },
+    'step_0_2': {
+      id: 'step_0_2',
+      content: 'Use connect',
+      completed: true,
+      dateCompleted: '22/04/2018',
+      goalId: 'id_0'
+    },
+    'step_0_3': {
+      id: 'step_0_3',
+      content: 'Write tests',
+      completed: true,
+      dateCompleted: '25/04/2018',
+      goalId: 'id_0'
+    },
+    'step_1_1': {
+      id: 'step_1_1',
+      content: 'Read about CSS in JS',
+      completed: false,
+      dateCompleted: null,
+      goalId: 'id_1'
+    },
+    'step_1_2': {
+      id: 'step_1_2',
+      content: 'Style Components',
+      completed: false,
+      dateCompleted: null,
+      goalId: 'id_1'
+    }
+  },
+  goals: ['id_0', 'id_1']
+};
+
 const store = createStore(
   reducer,
+  initialState,
   composeEnhancers(applyMiddleware(logger))
 );
 

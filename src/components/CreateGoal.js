@@ -37,7 +37,12 @@ class CreateGoal extends Component {
 
   handleClick() {
     const { createGoal } = this.props;
-    const [ id, name, date, desc ] = [uniqid('goal-'), this.state['goal-name'], this.state['due-date'], this.state['description']];
+    const [ id, name, date, desc ] = [
+      uniqid('goal-'),
+      this.state['goal-name'], 
+      this.state['due-date'],
+      this.state['description']
+    ];
     createGoal(id, name, date, desc);
     console.log('give feedback');
     this.setState({
