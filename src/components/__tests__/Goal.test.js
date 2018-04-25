@@ -101,24 +101,42 @@ describe('Goal', () => {
       it('should receive a `value` prop', () => {
         expect(linearProgress.props().value).toBeDefined();
       });
-      describe('the `value` prop', () => {
-        it('should equal `state.progress`', () => {
-          expect(linearProgress.props().value).toEqual(mountGoal().state().progress);
-        });
-      });
     });
   });
 
-  it('should call `componentDidMount` once', () => {
-    const componentDidMountSpy = jest.spyOn(UnwrappedGoal.prototype, 'componentDidMount');
-    mountGoal();
-    expect(componentDidMountSpy.mock.calls.length).toBe(1);
+  it('should have a `calculateProgress` method', () => {
+    expect(UnwrappedGoal.prototype.calculateProgress).toBeDefined();
   });
+  describe('the `calculateProgress` method', () => {
+    const calculateProgressSpy = jest.spyOn(UnwrappedGoal.prototype, 'calculateProgress');
+    afterEach(() => {
+      calculateProgressSpy.mockClear();
+    });
 
-  it('should update `state` correctly when `steps` is not empty', () => {
-    const steps = mountGoal().instance().props.steps;
-    const actual = steps.filter(step => step.completed).length / steps.length * 100;
-    expect(mountGoal().state().progress).toBeCloseTo(actual);
+    it('should update `progress` when the `steps` prop changes', () => {
+      const linearProgress = mountGoal().find(LinearProgress);
+
+      let steps = mountGoal().instance().props.steps;
+      const newStep = {
+        id: 'step_3',
+        content: 'test step 3',
+        completed: false,
+        dateCompleted: null,
+        goalId: 'goal_0'
+      };
+      steps = [...steps, newStep];
+      mountGoal().setProps({ steps });
+      const progress = steps.filter(step => step.completed).length / steps.length * 100;
+      expect(linearProgress.props().value).toBe(progress);
+
+      steps = [];
+      mountGoal().setProps({ steps });
+      expect(linearProgress.props().value).toBe(0);
+    });
+
+    it('should update `progress` when `step.completed` changes', () => {
+
+    });
   });
 
   it('should have a `state.expanded` property', () => {

@@ -16,27 +16,25 @@ class Goal extends Component {
   constructor() {
     super();
     this.state = {
-      expanded: false,
-      progress: 0
+      expanded: false
     };
     this.handleClick = this.handleClick.bind(this);
+    this.calculateProgress = this.calculateProgress.bind(this);
   }
 
   handleClick() {
     this.setState(prevState => ({ expanded: !prevState.expanded }));
   }
 
-  componentDidMount() {
+  calculateProgress() {
     const { steps } = this.props;
-    if (steps.length) {
-      const progress = steps.filter(step => step.completed).length / steps.length * 100;
-      this.setState({ progress });
-    }
+    return steps.filter(step => step.completed).length / steps.length * 100;
   }
 
   render() {
     const { goal, steps } = this.props;
-    const { expanded, progress } = this.state;
+    const { expanded } = this.state;
+    const progress = this.calculateProgress();
     return (
       <div>
         <ListItem component="button"
