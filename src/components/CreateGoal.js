@@ -37,14 +37,13 @@ class CreateGoal extends Component {
 
   handleClick() {
     const { createGoal } = this.props;
-    const [ id, name, date, desc ] = [
+    const [ id, name, desc ] = [
       uniqid('goal-'),
-      this.state['goal-name'], 
-      this.state['due-date'],
+      this.state['goal-name'],
       this.state['description']
     ];
+    const date = this.state['due-date'].split('-').reverse().join('/');
     createGoal(id, name, date, desc);
-    console.log('give feedback');
     this.setState({
       'goal-name': '',
       'due-date': '',
@@ -75,13 +74,14 @@ class CreateGoal extends Component {
           value={this.state['goal-name']}
         />
         <TextField
+          type="date"
           error={false}
           id="due-date"
+          InputLabelProps={{ shrink: true }}
           label="Complete date: "
           margin="normal"
           name="due-date"
           onChange={evt => this.handleChange(evt, 'due-date')}
-          placeholder="Set a completion date"
           required={true}
           value={this.state['due-date']}
         />
