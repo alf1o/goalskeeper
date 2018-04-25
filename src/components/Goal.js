@@ -26,15 +26,14 @@ class Goal extends Component {
     this.setState(prevState => ({ expanded: !prevState.expanded }));
   }
 
-  calculateProgress() {
-    const { steps } = this.props;
+  calculateProgress(steps) {
     return steps.filter(step => step.completed).length / steps.length * 100;
   }
 
   render() {
     const { goal, steps } = this.props;
     const { expanded } = this.state;
-    const progress = this.calculateProgress();
+    const progress = this.calculateProgress(steps);
     return (
       <div>
         <ListItem component="button"

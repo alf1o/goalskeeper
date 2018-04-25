@@ -4,10 +4,13 @@ import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
 import Clear from '@material-ui/icons/Clear';
 import Done from '@material-ui/icons/Done';
+import { connect } from 'react-redux';
+import completeStep from '../actions/completeStep';
 
 class Step extends Component {
   static propTypes = {
-    step: PropTypes.object.isRequired
+    step: PropTypes.object.isRequired,
+    completeStep: PropTypes.func.isRequired
   };
 
   constructor() {
@@ -24,7 +27,9 @@ class Step extends Component {
   }
 
   handleClick() {
+    const { step, completeStep } = this.props;
     this.setState(oldState => ({ completed: !oldState.completed }));
+    completeStep(step.id, this.state.completed);
   }
 
   render() {
@@ -49,4 +54,9 @@ class Step extends Component {
   }
 }
 
-export default Step;
+const mapDispatchToProps = {
+  completeStep
+};
+
+export { Step as UnwrappedStep };
+export default connect(null, mapDispatchToProps)(Step);

@@ -4,7 +4,7 @@ Enzyme.configure({ adapter: new Adapter() });
 
 import React from 'react';
 import { shallow } from 'enzyme';
-import Step from '../Step';
+import { UnwrappedStep } from '../Step';
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
 import Clear from '@material-ui/icons/Clear';
@@ -15,7 +15,7 @@ describe('Step', () => {
   let mountedStep;
 
   function mountStep() {
-    if (!mountedStep) mountedStep = shallow(<Step {...props} />);
+    if (!mountedStep) mountedStep = shallow(<UnwrappedStep {...props} />);
     return mountedStep;
   }
 
@@ -26,7 +26,8 @@ describe('Step', () => {
         content: 'Test step',
         completed: false,
         dateCompleted: null
-      }
+      },
+      completeStep: jest.fn()
     };
     mountedStep = undefined;
   });
@@ -58,7 +59,7 @@ describe('Step', () => {
   });
 
   it('should call `componentDidMount` once', () => {
-    const componentDidMountSpy = jest.spyOn(Step.prototype, 'componentDidMount');
+    const componentDidMountSpy = jest.spyOn(UnwrappedStep.prototype, 'componentDidMount');
     mountStep();
     expect(componentDidMountSpy.mock.calls.length).toBe(1);
   });
@@ -105,21 +106,23 @@ describe('Step', () => {
   });
 
   it('should have an `handleClick` method', () => {
-    expect(Step.prototype.handleClick).toBeDefined();
+    expect(UnwrappedStep.prototype.handleClick).toBeDefined();
   });
   describe('`handleClick`', () => {
     let handleClickSpy;
     beforeEach(() => {
-      handleClickSpy = jest.spyOn(Step.prototype, 'handleClick');
+      handleClickSpy = jest.spyOn(UnwrappedStep.prototype, 'handleClick');
     });
     afterEach(() => {
       handleClickSpy.mockClear();
     });
+
     it('should be called on `ListItem` click', () => {
       const listItem = mountStep().find(ListItem);
       listItem.simulate('click');
       expect(handleClickSpy.mock.calls.length).toBe(1);
     });
+
     it('should flip the value of `state.completed`', () => {
       const listItem = mountStep().find(ListItem);
       let completedState = mountStep().state().completed;
@@ -127,6 +130,12 @@ describe('Step', () => {
       expect(mountStep().state().completed).toBe(!completedState);
       listItem.simulate('click');
       expect(mountStep().state().completed).toBe(completedState);
+    });
+
+    it('should dispatch `COMPLETE_STEP`', () => {
+      const listItem = mountStep().find(ListItem);
+      listItem.simulate('click');
+      expect(mountStep().instance().props.completeStep.mock.calls.length).toBe(1);
     });
   });
 
