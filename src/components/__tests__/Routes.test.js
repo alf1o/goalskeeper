@@ -9,6 +9,7 @@ import Routes from '../Routes';
 import GoalsList from '../GoalsList';
 import CreateGoal from '../CreateGoal';
 import Profile from '../Profile';
+import NotFound from '../NotFound';
 import { Provider } from 'react-redux';
 import store from '../../store';
 
@@ -24,6 +25,7 @@ describe('Routes', () => {
     expect(routes.find(GoalsList).length).toBe(1);
     expect(routes.find(CreateGoal).length).toBe(0);
     expect(routes.find(Profile).length).toBe(0);
+    expect(routes.find(NotFound).length).toBe(0);
   });
 
   it('should render a `CreateGoal` at the `/creategoal` path', () => {
@@ -37,6 +39,7 @@ describe('Routes', () => {
     expect(routes.find(GoalsList).length).toBe(0);
     expect(routes.find(CreateGoal).length).toBe(1);
     expect(routes.find(Profile).length).toBe(0);
+    expect(routes.find(NotFound).length).toBe(0);
   });
 
   it('should render a `Profile` at the `/profile` path', () => {
@@ -48,6 +51,19 @@ describe('Routes', () => {
     expect(routes.find(GoalsList).length).toBe(0);
     expect(routes.find(CreateGoal).length).toBe(0);
     expect(routes.find(Profile).length).toBe(1);
+    expect(routes.find(NotFound).length).toBe(0);
+  });
+
+  it('should render a `NotFound` at any unknow path', () => {
+    const routes = mount(
+      <MemoryRouter initialEntries={['/unknown']}>
+        <Routes />
+      </MemoryRouter>
+    );
+    expect(routes.find(GoalsList).length).toBe(0);
+    expect(routes.find(CreateGoal).length).toBe(0);
+    expect(routes.find(Profile).length).toBe(0);
+    expect(routes.find(NotFound).length).toBe(1);
   });
 
 });
