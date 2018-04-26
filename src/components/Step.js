@@ -13,7 +13,7 @@ const Step = ({ step, completeStep }) => (
     <Checkbox
       checked={step.completed}
       disableRipple
-      color='primary'
+      color='secondary'
     />
     <ListItemText inset primary={step.content} />
   </ListItem>

@@ -1,16 +1,32 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
-import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
+import { ListItem } from 'material-ui/List';
 import GoalInfo from './GoalInfo';
+import ExpansionPanel, {
+  ExpansionPanelDetails,
+  ExpansionPanelSummary,
+} from 'material-ui/ExpansionPanel';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Typography from 'material-ui/Typography';
 import { LinearProgress } from 'material-ui/Progress';
 import { connect } from 'react-redux';
+import { withStyles } from 'material-ui/styles';
+
+const styles = {
+  listItem: {
+    display: 'flex',
+    'flex-direction': 'column'
+  },
+  linearProgress: {
+    width: '100%'
+  }
+};
 
 class Goal extends Component {
   static propTypes = {
     goal: PropTypes.object.isRequired,
-    steps: PropTypes.array.isRequired
+    steps: PropTypes.array.isRequired,
+    classes: PropTypes.object.isRequired
   };
 
   constructor() {
@@ -27,26 +43,33 @@ class Goal extends Component {
   }
 
   calculateProgress(steps) {
-    return steps.filter(step => step.completed).length / steps.length * 100;
+    return steps.filter(step => step.completed).length / steps.length * 100 || 0;
   }
 
   render() {
-    const { goal, steps } = this.props;
+    const { goal, steps, classes } = this.props;
     const { expanded } = this.state;
     const progress = this.calculateProgress(steps);
     return (
-      <div>
-        <ListItem component="button"
-          onClick={this.handleClick}
-        >
-          <ListItemIcon>
-            {expanded ? <ArrowDropUp /> : <ArrowDropDown />}
-          </ListItemIcon>
-          <ListItemText inset primary={goal.name} secondary={'Due: ' + goal.dueDate} />
-        </ListItem>
-        {expanded && <GoalInfo steps={steps} goalId={goal.id} />}
-        <LinearProgress variant='determinate' value={progress} />
-      </div>
+      <ListItem className={classes.listItem} divider={true}>
+        <ExpansionPanel expanded={expanded} onChange={this.handleClick}>
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <div>
+              <Typography variant="title">{goal.name}</Typography>
+              <Typography variant="subheading">{'Due: ' + goal.dueDate}</Typography>
+            </div>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <GoalInfo steps={steps} goalId={goal.id} />
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+        <LinearProgress
+          variant="determinate"
+          color="secondary"
+          className={classes.linearProgress}
+          value={progress}
+        />
+      </ListItem>
     );
   }
 }
@@ -58,4 +81,4 @@ function mapStateToProps(state, ownProps) {
 }
 
 export { Goal as UnwrappedGoal };
-export default connect(mapStateToProps)(Goal);
+export default withStyles(styles)(connect(mapStateToProps)(Goal));

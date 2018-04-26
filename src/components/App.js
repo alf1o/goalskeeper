@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 // import logo from '../logo.svg';
 import withRoot from '../withRoot';
-import { withStyles } from 'material-ui/styles';
+// import { withStyles } from 'material-ui/styles';
 import SideMenu from './SideMenu';
 import Header from './Header';
 import Routes from './Routes';
@@ -47,7 +47,7 @@ class App extends Component {
         <Button
           component={MyLink}
           variant="fab"
-          color="primary"
+          color="secondary"
           aria-label="add"
           style={{
             position: 'absolute',
@@ -64,4 +64,4 @@ class App extends Component {
 
 export { App as UnwrappedApp };
 
-export default withRoot(withStyles()(App));
+export default withRoot(App);

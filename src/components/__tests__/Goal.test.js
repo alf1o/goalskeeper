@@ -5,10 +5,12 @@ Enzyme.configure({ adapter: new Adapter() });
 import React from 'react';
 import { shallow } from 'enzyme';
 import { UnwrappedGoal } from '../Goal';
-import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
-import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
+import { ListItem } from 'material-ui/List';
 import GoalInfo from '../GoalInfo';
+import ExpansionPanel, { ExpansionPanelSummary } from 'material-ui/ExpansionPanel';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Collapse from 'material-ui/transitions/Collapse';
+import Typography from 'material-ui/Typography';
 import { LinearProgress } from 'material-ui/Progress';
 
 describe('Goal', () => {
@@ -42,65 +44,75 @@ describe('Goal', () => {
           dateCompleted: null,
           goalId: 'goal_0'
         }
-      ]
+      ],
+      classes: { listItem: {}, linearProgress: {} }
     };
     mountedGoal = undefined;
   });
 
-  it('it should always render a `div`', () => {
-    expect(mountGoal().find('div').length).toBeGreaterThan(0);
+  it('it should always render a `ListItem`', () => {
+    expect(mountGoal().find(ListItem).length).toBe(1);
   });
-  describe('the rendered `div`', () => {
-    let div;
-    beforeEach(() => {
-      div = mountGoal().find('div').first();
+  describe('the rendered `ListItem`', () => {
+    it('should receive a `listItem` `className` prop', () => {
+      const listItem = mountGoal().find(ListItem);
+      const listItemClassName = mountGoal().instance().props.classes.listItem;
+      expect(listItem.props().className).toEqual(listItemClassName);
+    });
+  });
+
+  it('should render an `ExpansionPanel`', () => {
+    expect(mountGoal().find(ExpansionPanel).length).toBe(1);
+  });
+  describe('the rendered `ExpansionPanel`', () => {
+    it('should receive a `onChange` prop', () => {
+      const expPanel = mountGoal().find(ExpansionPanel);
+      expect(expPanel.props().onChange).toBeDefined();
     });
 
-    it('should render a `ListItem`', () => {
-      expect(div.find(ListItem).length).toBe(1);
+    it('should receive a `expanded` prop', () => {
+      const expPanel = mountGoal().find(ExpansionPanel);
+      expect(expPanel.props().expanded).toBeDefined();
     });
-    describe('the rendered `ListItem`', () => {
-      let listItem;
-      beforeEach(() => {
-        listItem = div.find(ListItem);
-      });
-      it('should receive a `onClick` prop', () => {
-        expect(listItem.props().onClick).toBeDefined();
-      });
-      it('should render a `ListItemIcon`', () => {
-        expect(listItem.find(ListItemIcon).length).toBe(1);
-      });
-      it('should render a `ListItemText`', () => {
-        expect(listItem.find(ListItemText).length).toBe(1);
-      });
-      describe('the rendered `ListItemText`', () => {
-        it('should receive a `primary` prop with the value of `goal.name`', () => {
-          const listText = listItem.find(ListItemText);
-          const actual = mountGoal().instance().props.goal.name;
-          expect(listText.props().primary).toEqual(actual);
-        });
-        it('should receive a `scondary` prop with the value of `goal.dueDate`', () => {
-          const listText = listItem.find(ListItemText);
-          const actual = 'Due: ' + mountGoal().instance().props.goal.dueDate;
-          expect(listText.props().secondary).toEqual(actual);
-        });
-      });
+  });
+
+  it('should render an `ExpansionPanelSummary`', () => {
+    expect(mountGoal().find(ExpansionPanelSummary).length).toBe(1);
+  });
+
+  it('should render 2 `Typography`', () => {
+    expect(mountGoal().find(Typography).length).toBe(2);
+  });
+
+  describe('the first `Typography`', () => {
+    it('should render the goal name', () => {
+      const typo = mountGoal().find(Typography).first();
+      const goalName = mountGoal().instance().props.goal.name;
+      expect(typo.contains(goalName)).toBe(true);
+    });
+  });
+
+  describe('the second `Typography`', () => {
+    it('should render the goal date', () => {
+      const typo = mountGoal().find(Typography).last();
+      const date = mountGoal().instance().props.goal.dueDate;
+      expect(typo.contains('Due: ' + date)).toBe(true);
+    });
+  });
+
+  it('should render a `LinearProgress`', () => {
+    expect(mountGoal().find(LinearProgress).length).toBe(1);
+  });
+  describe('the rendered `LinearProgress`', () => {
+    it('should receive a `linearProgress` `className` prop', () => {
+      const linearProgress = mountGoal().find(LinearProgress);
+      const linearProgressClassName = mountGoal().instance().props.classes.linearProgress;
+      expect(linearProgress.props().className).toEqual(linearProgressClassName);
     });
 
-    it('should render a `LinearProgress`', () => {
-      expect(div.find(LinearProgress).length).toBe(1);
-    });
-    describe('the rendered `LinearProgress`', () => {
-      let linearProgress;
-      beforeEach(() => {
-        linearProgress = div.find(LinearProgress);
-      });
-      it('should receive a `variant` prop', () => {
-        expect(linearProgress.props().variant).toBeDefined();
-      });
-      it('should receive a `value` prop', () => {
-        expect(linearProgress.props().value).toBeDefined();
-      });
+    it('should receive a `value` prop', () => {
+      const linearProgress = mountGoal().find(LinearProgress);
+      expect(linearProgress.props().value).toBeDefined();
     });
   });
 
@@ -114,42 +126,49 @@ describe('Goal', () => {
     });
 
     it('should update `progress` when the `steps` prop changes', () => {
-      const linearProgress = mountGoal().find(LinearProgress);
-
       let steps = mountGoal().instance().props.steps;
       const newStep = {
         id: 'step_3',
         content: 'test step 3',
-        completed: false,
+        completed: true,
         dateCompleted: null,
         goalId: 'goal_0'
       };
       steps = [...steps, newStep];
       mountGoal().setProps({ steps });
       const progress = steps.filter(step => step.completed).length / steps.length * 100;
+      let linearProgress = mountGoal().find(LinearProgress);
       expect(linearProgress.props().value).toBe(progress);
 
       steps = [];
       mountGoal().setProps({ steps });
+      linearProgress = mountGoal().find(LinearProgress);
       expect(linearProgress.props().value).toBe(0);
-    });
 
-    it('should update `progress` when `step.completed` changes', () => {
-
+      steps = [
+        {
+          id: 'step_1',
+          content: 'test step 1',
+          completed: true,
+          dateCompleted: null,
+          goalId: 'goal_0'
+        },
+        {
+          id: 'step_2',
+          content: 'test step 2',
+          completed: true,
+          dateCompleted: null,
+          goalId: 'goal_0'
+        }
+      ];
+      mountGoal().setProps({ steps });
+      linearProgress = mountGoal().find(LinearProgress);
+      expect(linearProgress.props().value).toBe(100);
     });
   });
 
   it('should have a `state.expanded` property', () => {
     expect(mountGoal().state().expanded).toBeDefined();
-  });
-
-  describe('when `state.expanded` is `false`', () => {
-    it('should not render a `GoalInfo`', () => {
-      expect(mountGoal().find(GoalInfo).length).toBe(0);
-    });
-    it('should render an `ArrowDropDown`', () => {
-      expect(mountGoal().find(ArrowDropDown).length).toBe(1);
-    });
   });
 
   it('should have an `handleClick` method', () => {
@@ -163,15 +182,19 @@ describe('Goal', () => {
     afterEach(() => {
       handleClickSpy.mockClear();
     });
-    it('should be called on `ListItem` click', () => {
-      mountGoal().find(ListItem).simulate('click');
+
+    it('should be called on `ExpansionPanel` change', () => {
+      mountGoal().find(ExpansionPanel).simulate('change');
       expect(handleClickSpy.mock.calls.length).toBe(1);
     });
+
     it('should toggle `state.expanded`', () => {
       expect(mountGoal().state().expanded).toBe(false);
-      mountGoal().find(ListItem).simulate('click');
+
+      mountGoal().find(ExpansionPanel).simulate('change');
       expect(mountGoal().state().expanded).toBe(true);
-      mountGoal().find(ListItem).simulate('click');
+
+      mountGoal().find(ExpansionPanel).simulate('change');
       expect(mountGoal().state().expanded).toBe(false);
     });
   });
@@ -180,15 +203,10 @@ describe('Goal', () => {
     beforeEach(() => {
       mountGoal().setState({ expanded: true });
     });
-    it('should render a `GoalInfo`', () => {
-      expect(mountGoal().find(GoalInfo).length).toBe(1);
-    });
+
     it('should pass `steps` as prop to the rendered `GoalInfo`', () => {
       const goalInfo = mountGoal().find(GoalInfo);
       expect(goalInfo.props().steps).toBeDefined();
-    });
-    it('should render an `ArrowDropUp`', () => {
-      expect(mountGoal().find(ArrowDropUp).length).toBe(1);
     });
   });
 

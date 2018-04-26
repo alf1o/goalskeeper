@@ -10,7 +10,7 @@ const Header = ({ openDrawer }) => (
   <AppBar>
     <Toolbar>
       <IconButton
-        color="inherit"
+        color="secondary"
         aria-label="Menu"
         onClick={openDrawer}
       >
