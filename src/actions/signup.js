@@ -1,13 +1,13 @@
 import { SIGN_UP } from './types';
 import { formattedDate } from '../utils';
 
-function signup(id, name, password, dateJoined) {
+function signup(id, name, password) {
   return {
     type: SIGN_UP,
     id,
     name,
     password,
-    dateJoined
+    dateJoined: formattedDate()
   };
 }
 

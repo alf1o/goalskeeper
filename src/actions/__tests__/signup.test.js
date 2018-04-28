@@ -17,7 +17,7 @@ describe('`signup` action creator', () => {
       dateJoined
     };
 
-    expect(signup(id, name, password, dateJoined)).toMatchObject(action);
+    expect(signup(id, name, password)).toMatchObject(action);
   });
 
 });
