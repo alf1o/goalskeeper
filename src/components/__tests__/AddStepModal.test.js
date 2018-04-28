@@ -27,7 +27,8 @@ describe('`AddStepModal`', () => {
       goalId: 'id_0',
       open: false,
       onClose: jest.fn(),
-      addStep: jest.fn()
+      addStep: jest.fn(),
+      classes: { paper: {} }
     };
     mountedAddStepModal = undefined;
   });

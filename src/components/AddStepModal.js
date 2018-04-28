@@ -6,15 +6,30 @@ import Typography from 'material-ui/Typography';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import { connect } from 'react-redux';
+import { withStyles } from 'material-ui/styles';
 import addStep from '../actions/addStep';
 import uniqid from 'uniqid';
+
+const styles = theme => ({
+  paper: {
+    width: '70vw',
+    height: '50vh',
+    transform: 'translate(15vw, 25vh)',
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing.unit * 2,
+    display: 'flex',
+    'flex-direction': 'column'
+  }
+});
 
 class AddStepModal extends Component {
   static propTypes = {
     goalId: PropTypes.string.isRequired,
     open: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
-    addStep: PropTypes.func.isRequired
+    addStep: PropTypes.func.isRequired,
+    classes: PropTypes.object.isRequired
   };
 
   constructor() {
@@ -41,7 +56,7 @@ class AddStepModal extends Component {
 
   render() {
     const { content } = this.state;
-    const { open, onClose } = this.props;
+    const { open, onClose, classes } = this.props;
     return (
       <Modal
         aria-labelledby="add-step-modal"
@@ -49,7 +64,7 @@ class AddStepModal extends Component {
         open={open}
         onClose={onClose}
       >
-        <Paper>
+        <Paper className={classes.paper}>
           <Typography variant="title">Add a new step</Typography>
           <TextField
             autoFocus={true}
@@ -83,4 +98,4 @@ const mapDispatchToProps = {
 };
 
 export { AddStepModal as UnwrappedAddStepModal };
-export default connect(null, mapDispatchToProps)(AddStepModal);
+export default withStyles(styles)(connect(null, mapDispatchToProps)(AddStepModal));
