@@ -7,7 +7,7 @@ import completeStep from '../actions/completeStep';
 
 const Step = ({ step, completeStep }) => (
   <ListItem
-    component="button"
+    divider={true}
     onClick={() => completeStep(step.id, !step.completed)}
   >
     <Checkbox
