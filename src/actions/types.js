@@ -8,3 +8,8 @@ export const COMPLETE_GOAL = 'COMPLETE_GOAL';
 export const ADD_STEP = 'ADD_STEP';
 export const REMOVE_STEP = 'REMOVE_STEP';
 export const COMPLETE_STEP = 'COMPLETE_STEP';
+
+// User.
+export const LOG_IN = 'LOG_IN';
+export const LOG_OUT = 'LOG_OUT';
+export const SIGN_UP = 'SIGN_UP';
