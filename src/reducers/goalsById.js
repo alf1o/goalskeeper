@@ -6,7 +6,6 @@ import {
   ADD_STEP,
   REMOVE_STEP
 } from '../actions/types';
-import { formattedDate } from '../utils';
 
 function goal(state = {}, action) {
   switch(action.type) {
@@ -17,7 +16,7 @@ function goal(state = {}, action) {
         dueDate: action.dueDate,
         steps: [],
         completed: false,
-        dateCreated: formattedDate(),
+        dateCreated: action.dateCreated,
         description: action.description
       };
     case DELETE_GOAL:
