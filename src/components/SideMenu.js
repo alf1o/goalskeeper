@@ -24,17 +24,21 @@ class SideMenu extends Component {
           onKeyDown={handleClose}
         >
           <List>
-            <ListItem component={NavLink}
-            to="/profile"
+            <ListItem
+              component={NavLink}
+              to="/profile"
+              divider={true}
             >
               <ListItemText inset primary="Profile" />
             </ListItem>
-            <ListItem component="button"
+            <ListItem
+              divider={true}
               onClick={() => alert('navigate to /managegoals')}
             >
               <ListItemText inset primary="Manage Goals" />
             </ListItem>
-            <ListItem component="button"
+            <ListItem
+              divider={true}
               onClick={() => alert('navigate to /tips')}
             >
               <ListItemText inset primary="Tips" />

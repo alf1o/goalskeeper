@@ -9,7 +9,6 @@ import Routes from './Routes';
 import Button from 'material-ui/Button';
 import ContentAdd from '@material-ui/icons/Add';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 const MyLink = props => <Link to="/creategoal" {...props} />;
 
