@@ -6,6 +6,10 @@ import { Provider } from 'react-redux';
 import store from './store';
 import registerServiceWorker from './registerServiceWorker';
 
+// TODO: should go in `App.cDM`.
+import setupDB from './indexedDButils';
+setupDB();
+
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
