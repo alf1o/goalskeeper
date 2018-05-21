@@ -6,7 +6,7 @@ import Divider from 'material-ui/Divider';
 import Button from 'material-ui/Button';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import createGoal from '../actions/createGoal';
+import createGoalThunk from '../actions/createGoal';
 import uniqid from 'uniqid';
 
 class CreateGoal extends Component {
@@ -14,8 +14,8 @@ class CreateGoal extends Component {
     createGoal: PropTypes.func.isRequired
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       'goal-name': '',
       'due-date': '',
@@ -114,7 +114,7 @@ class CreateGoal extends Component {
 }
 
 const mapDispatchToProps = {
-  createGoal
+  createGoal: createGoalThunk
 };
 
 export { CreateGoal as UnwrappedCreateGoal };

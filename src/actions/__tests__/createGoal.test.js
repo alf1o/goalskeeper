@@ -1,5 +1,5 @@
 import { CREATE_GOAL } from '../types';
-import createGoal from '../createGoal';
+import { createGoal } from '../createGoal';
 import { formattedDate } from '../../utils';
 
 describe('`creatGoal` action creator', () => {

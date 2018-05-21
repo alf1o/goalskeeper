@@ -1,5 +1,6 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { createLogger } from 'redux-logger';
+import thunk from 'redux-thunk';
 import goalsById from './reducers/goalsById';
 import stepsById from './reducers/stepsById';
 import goals from './reducers/goals';
@@ -16,7 +17,7 @@ const reducer = combineReducers({
   stepsById,
   goals
 });
-
+/*
 const initialState = {
   goalsById: {
     'id_0': {
@@ -84,11 +85,10 @@ const initialState = {
   },
   goals: ['id_0', 'id_1']
 };
-
+*/
 const store = createStore(
   reducer,
-  initialState,
-  composeEnhancers(applyMiddleware(logger))
+  composeEnhancers(applyMiddleware(logger, thunk))
 );
 
 export default store;

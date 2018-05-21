@@ -89,5 +89,9 @@ function addData(storeName, data) {
   );
 }
 
-export { addData };
+function getDB() {
+  return db;
+}
+
+export { getDB, addData };
 export default setupDB;
