@@ -48,22 +48,22 @@ function setupDB() {
 /**
   Fetch initial data from the DB.
 */
-function retrieveGoals() {
+function retrieveData(storeName) {
   console.log('%c retrieving initial data', 'color: blue;');
   return new Promise(resolve => {
-    const goals = [];
+    const res = [];
     // Start a `transaction` to retrieve initial data.
     const tr = db
-      .transaction(['goals'])
-      .objectStore('goals')
+      .transaction(storeName)
+      .objectStore(storeName)
       .openCursor()
       .onsuccess = evt => {
         const cursor = evt.target.result;
         if (cursor) {
-          goals.push(cursor.value);
+          res.push(cursor.value);
           cursor.continue();
         } else {
-          resolve(goals);
+          resolve(res);
         }
       };
   });
@@ -135,6 +135,10 @@ async function modifyData(storeName, id, changes) {
   console.log('%c start transaction to put data in ' + storeName, 'color: blue;');
 
   const data = await getOne(storeName, id);
+  // Merge the old `steps` and the new ones.
+  if (changes.steps) {
+    changes.steps = data.steps.concat(changes.steps);
+  }
   const putReq = db
     .transaction(storeName, 'readwrite')
     .objectStore(storeName)
@@ -184,5 +188,5 @@ function getDB() {
   return db;
 }
 
-export { getDB, addData, retrieveGoals, getOne, modifyData, deleteOne };
+export { getDB, addData, retrieveData, getOne, modifyData, deleteOne };
 export default setupDB;

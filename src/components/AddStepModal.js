@@ -77,6 +77,8 @@ class AddStepModal extends Component {
             placeholder="A journey of a thousand miles starts with the first step"
             required={true}
             value={content}
+            multiline={true}
+            rows={2}
           />
           <Button
             variant="raised"

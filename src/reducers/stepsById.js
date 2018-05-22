@@ -1,4 +1,9 @@
-import { ADD_STEP, REMOVE_STEP, COMPLETE_STEP } from '../actions/types';
+import {
+  ADD_STEP,
+  REMOVE_STEP,
+  COMPLETE_STEP,
+  ADD_EXISTING_STEP
+} from '../actions/types';
 import { formattedDate } from '../utils';
 
 function step(state = {}, action) {
@@ -43,6 +48,11 @@ function stepsById(state = {}, action) {
       return {
         ...state,
         [action.id]: step(state[action.id], action)
+      };
+    case ADD_EXISTING_STEP:
+      return {
+        ...state,
+        [action.step.id]: action.step
       };
     default:
       return state;

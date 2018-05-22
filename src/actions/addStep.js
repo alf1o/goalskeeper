@@ -1,5 +1,5 @@
 import { ADD_STEP } from './types';
-import { addData } from '../indexedDButils';
+import { addData, modifyData } from '../indexedDButils';
 
 function addStep(goalId, id, content = '') {
   return {
@@ -19,6 +19,7 @@ function addStepThunk(goalId, id, content = '') {
       dateCompleted: null,
       goalId
     });
+    modifyData('goals', goalId, { steps: id });
     return dispatch(addStep(goalId, id, content));
   };
 }
