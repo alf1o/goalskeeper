@@ -8,7 +8,7 @@ import Header from './Header';
 import Routes from './Routes';
 import Button from 'material-ui/Button';
 import ContentAdd from '@material-ui/icons/Add';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import addExistingGoalThunk from '../actions/addExistingGoal';
 import setupDB from '../indexedDButils';
@@ -77,4 +77,4 @@ const mapDispatchToProps = {
 };
 
 export { App as UnwrappedApp };
-export default withRoot(connect(null, mapDispatchToProps)(App));
+export default withRouter(withRoot(connect(null, mapDispatchToProps)(App)));
