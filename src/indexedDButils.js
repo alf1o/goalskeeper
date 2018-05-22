@@ -53,7 +53,7 @@ function retrieveData(storeName) {
   return new Promise(resolve => {
     const res = [];
     // Start a `transaction` to retrieve initial data.
-    const tr = db
+    db
       .transaction(storeName)
       .objectStore(storeName)
       .openCursor()
