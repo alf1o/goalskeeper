@@ -7,7 +7,7 @@ import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
-import addStep from '../actions/addStep';
+import addStepThunk from '../actions/addStep';
 import uniqid from 'uniqid';
 
 const styles = theme => ({
@@ -94,7 +94,7 @@ class AddStepModal extends Component {
 }
 
 const mapDispatchToProps = {
-  addStep
+  addStep: addStepThunk
 };
 
 export { AddStepModal as UnwrappedAddStepModal };

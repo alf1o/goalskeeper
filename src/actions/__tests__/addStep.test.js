@@ -1,5 +1,5 @@
 import { ADD_STEP } from '../types';
-import addStep from '../addStep';
+import { addStep } from '../addStep';
 
 describe('`addStep` action creator', () => {
   it('should create an action to add a step', () => {
