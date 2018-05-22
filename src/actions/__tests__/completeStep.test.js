@@ -1,5 +1,5 @@
 import { COMPLETE_STEP } from '../types';
-import completeStep from '../completeStep';
+import { completeStep } from '../completeStep';
 
 describe('`completeStep` action creator', () => {
   it('should create a `COMPLETE_STEP` action', () => {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { ListItem, ListItemText } from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
 import { connect } from 'react-redux';
-import completeStep from '../actions/completeStep';
+import completeStepThunk from '../actions/completeStep';
 
 const Step = ({ step, completeStep }) => (
   <ListItem
@@ -25,7 +25,7 @@ Step.propTypes = {
 };
 
 const mapDispatchToProps = {
-  completeStep
+  completeStep: completeStepThunk
 };
 
 export { Step as UnwrappedStep };

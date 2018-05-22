@@ -1,4 +1,5 @@
 import { COMPLETE_STEP } from './types';
+import { modifyData } from '../indexedDButils';
 
 function completeStep(id, completed) {
   return {
@@ -8,7 +9,15 @@ function completeStep(id, completed) {
   };
 }
 
-export default completeStep;
+function completeStepThunk(id, completed) {
+  return function(dispatch) {
+    modifyData('steps', id, { completed });
+    return dispatch(completeStep(id, completed));
+  };
+}
+
+export { completeStep };
+export default completeStepThunk;
 
 /*
   {
