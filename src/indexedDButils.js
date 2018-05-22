@@ -77,7 +77,7 @@ function retrieveGoals() {
 function addData(storeName, data) {
   console.log('%c adding new item to DB', 'color: blue;');
   const addReq = db
-    .transaction([storeName], 'readwrite')
+    .transaction(storeName, 'readwrite')
     .objectStore(storeName)
     .add(data);
 
@@ -95,9 +95,94 @@ function addData(storeName, data) {
   );
 }
 
+/**
+  Retrieve one element from the DB based on the object store `keyPath` (`id`).
+  @param { string } storeName
+  @param { string } id
+  @return { promise } a promise carrying the object
+*/
+function getOne(storeName, id) {
+  console.log('%c start transaction to get an element from ' + storeName, 'color: blue;');
+
+  return new Promise((resolve, reject) => {
+    const getReq = db
+      .transaction(storeName)
+      .objectStore(storeName)
+      .get(id);
+
+    // In case of errors
+    getReq.onerror = evt => console.log(
+      '%c error during `get`',
+      'color: red;',
+      evt.target.errorCode
+    ) || reject(evt);
+
+    // In case of success return the object retrieved
+    getReq.onsuccess = evt => console.log(
+      '%c got data', 'color: green;'
+    ) || resolve(evt.target.result);
+  });
+}
+
+/**
+  Change an element in the DB.
+  @param { string } storeName
+  @param { string } id
+  @param { object } changes : the changes to apply to the data
+  @return { promise }
+*/
+async function modifyData(storeName, id, changes) {
+  console.log('%c start transaction to put data in ' + storeName, 'color: blue;');
+
+  const data = await getOne(storeName, id);
+  const putReq = db
+    .transaction(storeName, 'readwrite')
+    .objectStore(storeName)
+    .put(Object.assign(data, changes));
+
+  putReq.onerror = evt => console.log(
+    '%c error while updating data',
+    'color: red;',
+    evt.target.errorCode
+  );
+
+  putReq.onsucces = evt => console.log(
+    '%c put operation success',
+    'color: green;'
+  );
+}
+
+/**
+  Remove an object from the DB.
+  @param { string } storeName
+  @param { string } id
+  @return { promise } promise carrying the deleted data
+*/
+function deleteOne(storeName, id) {
+  console.log('%c starting tr to delete from ' + storeName, 'color: blue;');
+
+  return new Promise((resolve, reject) => {
+    const delReq = db
+      .transaction(storeName, 'readwrite')
+      .objectStore(storeName)
+      .delete(id);
+
+    delReq.onerror = evt => console.log(
+      '%c error while deleting',
+      'color: red;',
+      evt.target.errorCode
+    ) || reject(evt);
+
+    delReq.onsuccess = evt => console.log(
+      '%c delete success',
+      'color: green;'
+    ) || resolve(evt.target.result);
+  });
+}
+
 function getDB() {
   return db;
 }
 
-export { getDB, addData, retrieveGoals };
+export { getDB, addData, retrieveGoals, getOne, modifyData, deleteOne };
 export default setupDB;

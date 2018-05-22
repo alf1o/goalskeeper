@@ -32,7 +32,7 @@ class App extends Component {
   componentDidMount() {
     const { addExistingGoal } = this.props;
     setupDB()
-    .then(() => addExistingGoal());
+    .then(addExistingGoal);
   }
 
   handleOpenDrawer() {

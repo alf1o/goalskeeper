@@ -12,6 +12,7 @@ function addExistingGoalThunk() {
   return async function(dispatch) {
     const goals = await retrieveGoals();
     goals.forEach(goal => dispatch(addExistingGoal(goal)));
+    return;
   };
 }
 
