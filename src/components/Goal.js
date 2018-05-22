@@ -15,7 +15,13 @@ import { withStyles } from 'material-ui/styles';
 const styles = {
   listItem: {
     display: 'flex',
-    'flex-direction': 'column'
+    'flex-direction': 'column',
+    width: '100%',
+    padding: 0
+  },
+  expPanel: {
+    width: '100%',
+    padding: '2%'
   },
   linearProgress: {
     width: '100%'
@@ -52,7 +58,7 @@ class Goal extends Component {
     const progress = this.calculateProgress(steps);
     return (
       <ListItem className={classes.listItem} divider={true}>
-        <ExpansionPanel expanded={expanded} onChange={this.handleClick}>
+        <ExpansionPanel expanded={expanded} onChange={this.handleClick} className={classes.expPanel}>
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <div>
               <Typography variant="title">{goal.name}</Typography>
