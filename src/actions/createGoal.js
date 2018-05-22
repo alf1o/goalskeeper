@@ -23,7 +23,9 @@ function createGoalThunk(id, name = '', dueDate = null, description = '') {
         name,
         dueDate,
         description,
-        dateCreated: formattedDate()
+        dateCreated: formattedDate(),
+        steps: [],
+        completed: false
       }
     );
     return dispatch(createGoal(id, name, dueDate, description));

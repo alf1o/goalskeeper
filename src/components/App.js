@@ -9,19 +9,30 @@ import Routes from './Routes';
 import Button from 'material-ui/Button';
 import ContentAdd from '@material-ui/icons/Add';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import addExistingGoalThunk from '../actions/addExistingGoal';
+import setupDB from '../indexedDButils';
 
 const MyLink = props => <Link to="/creategoal" {...props} />;
 
 class App extends Component {
-  static propTypes = {};
+  static propTypes = {
+    addExistingGoal: PropTypes.func.isRequired
+  };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       drawerOpen: false
     };
     this.handleOpenDrawer = this.handleOpenDrawer.bind(this);
     this.handleCloseDrawer = this.handleCloseDrawer.bind(this);
+  }
+
+  componentDidMount() {
+    const { addExistingGoal } = this.props;
+    setupDB()
+    .then(() => addExistingGoal());
   }
 
   handleOpenDrawer() {
@@ -61,6 +72,9 @@ class App extends Component {
   }
 }
 
-export { App as UnwrappedApp };
+const mapDispatchToProps = {
+  addExistingGoal: addExistingGoalThunk
+};
 
-export default withRoot(App);
+export { App as UnwrappedApp };
+export default withRoot(connect(null, mapDispatchToProps)(App));

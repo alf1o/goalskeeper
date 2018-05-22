@@ -4,7 +4,8 @@ import {
   EDIT_GOAL,
   COMPLETE_GOAL,
   ADD_STEP,
-  REMOVE_STEP
+  REMOVE_STEP,
+  ADD_EXISTING_GOAL
 } from '../actions/types';
 
 function goal(state = {}, action) {
@@ -24,24 +25,24 @@ function goal(state = {}, action) {
       return null;
     case EDIT_GOAL:
       return {
-          ...state,
-          [action.what]: action.how
-        };
-      case COMPLETE_GOAL:
+        ...state,
+        [action.what]: action.how
+      };
+    case COMPLETE_GOAL:
       return {
-          ...state,
-          completed: true
-        };
-      case ADD_STEP:
-        return {
-          ...state,
-          steps: [...state.steps, action.id]
-        };
-      case REMOVE_STEP:
-        return {
-          ...state,
-          steps: state.steps.filter(step => step !== action.id)
-        };
+        ...state,
+        completed: true
+      };
+    case ADD_STEP:
+      return {
+        ...state,
+        steps: [...state.steps, action.id]
+      };
+    case REMOVE_STEP:
+      return {
+        ...state,
+        steps: state.steps.filter(step => step !== action.id)
+      };
     default:
       return state;
   }
@@ -82,6 +83,11 @@ function goalsById(state = {}, action) {
       return {
         ...state,
         [action.goalId]: goal(state[action.goalId], action)
+      };
+    case ADD_EXISTING_GOAL:
+      return {
+        ...state,
+        [action.goal.id]: action.goal
       };
     default:
       return state;
