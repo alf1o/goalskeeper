@@ -1,4 +1,5 @@
 import { DELETE_GOAL } from './types';
+import { deleteOne } from '../indexedDButils';
 
 function deleteGoal(id) {
   return {
@@ -7,7 +8,15 @@ function deleteGoal(id) {
   };
 }
 
-export default deleteGoal;
+function deleteGoalThunk(id) {
+  return function(dispatch) {
+    deleteOne('goals', id);
+    return dispatch(deleteGoal(id));
+  };
+}
+
+export { deleteGoal };
+export default deleteGoalThunk;
 
 /*
   {

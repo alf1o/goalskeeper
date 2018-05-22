@@ -35,7 +35,7 @@ class GoalInfo extends Component {
     const { steps, goalId } = this.props;
     const { modalOpen } = this.state;
     return (
-      <Paper style={{width: '100%'}}>
+      <Paper style={{width: '100%', marginBottom: '3%'}}>
         <div>
           <List component="ul">
             {steps.map(step => <Step key={step.id} step={step} />)}

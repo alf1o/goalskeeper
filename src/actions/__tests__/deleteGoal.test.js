@@ -1,5 +1,5 @@
 import { DELETE_GOAL } from '../types';
-import deleteGoal from '../deleteGoal';
+import { deleteGoal } from '../deleteGoal';
 
 describe('`deleteGoal` action creator', () => {
   it('should create an action to delete a goal', () => {
