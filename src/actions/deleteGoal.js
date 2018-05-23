@@ -8,10 +8,12 @@ function deleteGoal(id) {
   };
 }
 
-function deleteGoalThunk(id) {
+// TODO: check concurrent readwrite trs work fine.
+function deleteGoalThunk(goal) {
   return function(dispatch) {
-    deleteOne('goals', id);
-    return dispatch(deleteGoal(id));
+    deleteOne('goals', goal.id);
+    goal.steps.forEach(stepId => deleteOne('steps', 'stepId'));
+    return dispatch(deleteGoal(goal.id));
   };
 }
 

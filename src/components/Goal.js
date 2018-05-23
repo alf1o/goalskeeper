@@ -62,8 +62,8 @@ class Goal extends Component {
   }
 
   handleDelete() {
-    const { deleteGoal, goal: { id } } = this.props;
-    deleteGoal(id);
+    const { deleteGoal, goal } = this.props;
+    deleteGoal(goal);
   }
 
   render() {
