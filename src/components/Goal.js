@@ -84,7 +84,7 @@ class Goal extends Component {
             <Button
               style={{margin: 'auto'}}
               variant="raised"
-              aria-label="delete"
+              aria-label="delete-goal"
               color="secondary"
               onClick={this.handleDelete}
             >

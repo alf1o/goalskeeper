@@ -1,5 +1,5 @@
 import { REMOVE_STEP } from '../types';
-import removeStep from '../removeStep';
+import { removeStep } from '../removeStep';
 
 describe('`removeStep` action creator', () => {
   it('should return an action to remove a step', () => {

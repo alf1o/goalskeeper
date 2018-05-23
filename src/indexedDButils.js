@@ -37,9 +37,8 @@ function setupDB() {
       goalsStore.createIndex('creationDate', 'dateCreated', { unique: false });
 
       // store for steps, organized by `id`.
-      // indexed by name and goal id.
+      // indexed goal id.
       const stepsStore = db.createObjectStore('steps', { keyPath: 'id' });
-      stepsStore.createIndex('stepName', 'name', { unique: false });
       stepsStore.createIndex('goalId', 'goalId', { unique: false });
     };
   });
@@ -137,7 +136,11 @@ async function modifyData(storeName, id, changes) {
   const data = await getOne(storeName, id);
   // Merge the old `steps` and the new ones.
   if (changes.steps) {
-    changes.steps = data.steps.concat(changes.steps);
+    if (changes.steps.remove) {
+      changes.steps = data.steps.filter(stepId => stepId !== changes.steps.id);
+    } else {
+      changes.steps = data.steps.concat(changes.steps);
+    }
   }
   const putReq = db
     .transaction(storeName, 'readwrite')

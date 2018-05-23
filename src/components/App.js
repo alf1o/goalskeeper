@@ -57,7 +57,7 @@ class App extends Component {
         <Button
           component={MyLink}
           variant="fab"
-          color="secondary"
+          color="primary"
           aria-label="add"
           style={{
             position: 'absolute',
