@@ -13,6 +13,8 @@ import { connect } from 'react-redux';
 import addExistingGoalThunk from '../actions/addExistingGoal';
 import setupDB from '../indexedDButils';
 
+// TODO: manage goals and tips Views
+
 const MyLink = props => <Link to="/creategoal" {...props} />;
 
 class App extends Component {

@@ -26,22 +26,17 @@ class SideMenu extends Component {
           <List>
             <ListItem
               component={NavLink}
+              to="/"
+              divider={true}
+            >
+              <ListItemText inset primary="Home" />
+            </ListItem>
+            <ListItem
+              component={NavLink}
               to="/profile"
               divider={true}
             >
               <ListItemText inset primary="Profile" />
-            </ListItem>
-            <ListItem
-              divider={true}
-              onClick={() => alert('navigate to /managegoals')}
-            >
-              <ListItemText inset primary="Manage Goals" />
-            </ListItem>
-            <ListItem
-              divider={true}
-              onClick={() => alert('navigate to /tips')}
-            >
-              <ListItemText inset primary="Tips" />
             </ListItem>
           </List>
         </div>

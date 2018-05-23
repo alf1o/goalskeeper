@@ -78,7 +78,7 @@ class AddStepModal extends Component {
             required={true}
             value={content}
             multiline={true}
-            rows={2}
+            rows={3}
           />
           <Button
             variant="raised"
