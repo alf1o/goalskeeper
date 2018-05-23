@@ -9,7 +9,7 @@ function editGoal(id, what = 'name', how = '') {
   };
 }
 
-export default editGoal;
+export { editGoal };
 
 /*
   {

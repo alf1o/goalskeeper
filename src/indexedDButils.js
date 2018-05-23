@@ -40,6 +40,9 @@ function setupDB() {
       // indexed goal id.
       const stepsStore = db.createObjectStore('steps', { keyPath: 'id' });
       stepsStore.createIndex('goalId', 'goalId', { unique: false });
+
+      // store for the user
+      db.createObjectStore('user', { keyPath: 'id' });
     };
   });
 }
@@ -187,9 +190,25 @@ function deleteOne(storeName, id) {
   });
 }
 
+function fetchUser() {
+  console.log('%c start tr to fetch user', 'color: blue;');
+  return new Promise((resolve, reject) => {
+    db
+      .transaction('user')
+      .objectStore('user')
+      .openCursor()
+      .onsuccess = evt => {
+        console.log('%c fetch user success', 'color: green;');
+        const cursor = evt.target.result;
+        if (cursor) resolve(cursor.value);
+        resolve(null);
+      };
+  });
+}
+
 function getDB() {
   return db;
 }
 
-export { getDB, addData, retrieveData, getOne, modifyData, deleteOne };
+export { getDB, addData, retrieveData, getOne, modifyData, deleteOne, fetchUser };
 export default setupDB;

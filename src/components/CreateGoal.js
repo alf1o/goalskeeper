@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
-import Divider from 'material-ui/Divider';
 import Button from 'material-ui/Button';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';

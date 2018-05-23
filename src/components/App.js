@@ -10,8 +10,10 @@ import Button from 'material-ui/Button';
 import ContentAdd from '@material-ui/icons/Add';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import createUserThunk from '../actions/createUser';
 import addExistingGoalThunk from '../actions/addExistingGoal';
-import setupDB from '../indexedDButils';
+import setupDB, { fetchUser } from '../indexedDButils';
+import uniqid from 'uniqid';
 
 // TODO: manage goals and tips Views
 
@@ -19,6 +21,7 @@ const MyLink = props => <Link to="/creategoal" {...props} />;
 
 class App extends Component {
   static propTypes = {
+    createUser: PropTypes.func.isRequired,
     addExistingGoal: PropTypes.func.isRequired
   };
 
@@ -32,8 +35,14 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const { addExistingGoal } = this.props;
+    const { addExistingGoal, createUser } = this.props;
     setupDB()
+    .then(fetchUser)
+    .then(user => {
+      if (!user) createUser({ id: uniqid('user-') });
+      else createUser(user, true);
+      return;
+    })
     .then(addExistingGoal);
   }
 
@@ -75,6 +84,7 @@ class App extends Component {
 }
 
 const mapDispatchToProps = {
+  createUser: createUserThunk,
   addExistingGoal: addExistingGoalThunk
 };
 

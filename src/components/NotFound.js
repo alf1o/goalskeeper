@@ -1,12 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import { Link } from 'react-router-dom';
 
 const NotFound = () => (
-  <Paper>
+  <Paper style={{marginTop: '56px', padding: '2%'}}>
     <div>
       <Typography
         variant="display3"

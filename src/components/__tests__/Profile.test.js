@@ -4,7 +4,7 @@ Enzyme.configure({ adapter: new Adapter() });
 
 import React from 'react'
 import { shallow } from 'enzyme';
-import Profile from '../Profile';
+import { Profile } from '../Profile';
 import Card, { CardHeader, CardContent } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 

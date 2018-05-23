@@ -1,5 +1,5 @@
 import { EDIT_GOAL } from '../types';
-import editGoal from '../editGoal';
+import { editGoal } from '../editGoal';
 
 describe('`editGoal` action creator', () => {
   it('should return an action to edit a specific goal', () => {
