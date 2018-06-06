@@ -7,8 +7,7 @@ import { shallow } from 'enzyme';
 import { UnwrappedStep } from '../Step';
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
-import Clear from '@material-ui/icons/Clear';
-import Done from '@material-ui/icons/Done';
+import Button from 'material-ui/Button';
 
 describe('Step', () => {
   let props;
@@ -27,7 +26,8 @@ describe('Step', () => {
         completed: false,
         dateCompleted: null
       },
-      completeStep: jest.fn()
+      completeStep: jest.fn(),
+      removeStep: jest.fn()
     };
     mountedStep = undefined;
   });
@@ -63,4 +63,27 @@ describe('Step', () => {
     expect(props.completeStep.mock.calls.length).toBe(1);
   });
 
+  it('should have an `handleRemove` method', () => {
+    expect(UnwrappedStep.prototype.handleRemove).toBeDefined();
+  });
+
+  describe('`handleRemove`', () => {
+    it('should dispatch a `REMOVE_STEP` action', () => {
+      const evt = {
+        stopPropagation: jest.fn()
+      };
+      mountStep().instance().handleRemove(evt);
+      expect(props.removeStep.mock.calls.length).toBe(1);
+    });
+  });
+
+  it('should always render a `Button`', () => {
+    expect(mountStep().find(Button).length).toBe(1);
+  });
+  describe('the rendered `Button`', () => {
+    it('should receive an `onClick` prop', () => {
+      const btn = mountStep().find(Button);
+      expect(btn.props().onClick).toBeDefined();
+    });
+  });
 });

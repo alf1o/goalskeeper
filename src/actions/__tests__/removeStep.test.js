@@ -10,7 +10,7 @@ describe('`removeStep` action creator', () => {
       goalId,
       id
     };
-    expect(removeStep(goalId, id)).toMatchObject(action);
+    expect(removeStep(id, goalId)).toMatchObject(action);
   });
 
 });
