@@ -48,8 +48,8 @@ describe('SideMenu', () => {
     expect(sideMenu().find(List).length).toBe(1);
   });
 
-  it('should render 3 `ListItem`s', () => {
-    expect(sideMenu().find(ListItem).length).toBe(3);
+  it('should render 2 `ListItem`s', () => {
+    expect(sideMenu().find(ListItem).length).toBe(2);
   });
 
   it('should call `handleClose` prop when the `Drawer` is closed', () => {

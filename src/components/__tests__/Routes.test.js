@@ -50,7 +50,7 @@ describe('Routes', () => {
     );
     expect(routes.find(GoalsList).length).toBe(0);
     expect(routes.find(CreateGoal).length).toBe(0);
-    expect(routes.find(Profile).length).toBe(1);
+    expect(routes.find(Profile).length).toBe(1); // TODO
     expect(routes.find(NotFound).length).toBe(0);
   });
 
