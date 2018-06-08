@@ -1,8 +1,6 @@
-import signup from '../../actions/signup';
-import login from '../../actions/login';
-import logout from '../../actions/logout';
 import user from '../user';
-import { formattedDate, deepFreeze } from '../../utils';
+import { createUser } from '../../actions/createUser';
+import { changeName } from '../../actions/changeUserName';
 
 describe('`user` reducer', () => {
   it('should return the initial `state` when the `state` argument is `undefined`', () => {
@@ -20,21 +18,35 @@ describe('`user` reducer', () => {
     expect(user(state, { type: 'UNKNOWN' })).toEqual(state);
   });
 
-  it('should handle the `SIGN_UP` action', () => {
-    const id = 'user_0';
-    const name = 'Test';
-    const password = 'hidenseek';
-    const action = signup(id, name, password);
-
+  it('should handle `CREATE_USER` action', () => {
+    const id = 'id_0';
+    const name = 'Timmy';
+    const dateJoined = '07/06/2018';
+    const action = createUser(id, name, dateJoined);
     const state = {
       id,
       name,
-      password,
-      dateJoined: formattedDate(),
-      isLogged: true
+      dateJoined,
+      goalsCompleted: []
     };
-
-    expect(user(undefined, action)).toEqual(state);
+    expect(user({}, action)).toEqual(state);
   });
 
+  it('should handle `CHANGE_NAME` action', () => {
+    const initialState = {
+      id: 'id_0',
+      name: '',
+      dateJoined: '08/06/2018',
+      goalsCompleted: []
+    };
+    const name = 'Test';
+    const action = changeName(name);
+    const state = {
+      id: 'id_0',
+      name: 'Test',
+      dateJoined: '08/06/2018',
+      goalsCompleted: []
+    };
+    expect(user(initialState, action)).toEqual(state);
+  });
 });
