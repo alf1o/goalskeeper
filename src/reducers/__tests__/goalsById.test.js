@@ -1,9 +1,9 @@
-import createGoal from '../../actions/createGoal';
-import deleteGoal from '../../actions/deleteGoal';
-import editGoal from '../../actions/editGoal';
+import { createGoal } from '../../actions/createGoal';
+import { deleteGoal } from '../../actions/deleteGoal';
+import { editGoal } from '../../actions/editGoal';
 import completeGoal from '../../actions/completeGoal';
-import addStep from '../../actions/addStep';
-import removeStep from '../../actions/removeStep';
+import { addStep } from '../../actions/addStep';
+import { removeStep } from '../../actions/removeStep';
 import goalsById from '../goalsById';
 import { deepFreeze, formattedDate } from '../../utils';
 
@@ -230,7 +230,7 @@ describe('`goalsById` reducer', () => {
     };
     deepFreeze(initialState);
 
-    const action1 = removeStep('id_0', 'step_1');
+    const action1 = removeStep('step_1', 'id_0');
     const state1 = goalsById(initialState, action1);
     let expected = {
       id_0: {
@@ -247,7 +247,7 @@ describe('`goalsById` reducer', () => {
 
     deepFreeze(state1);
 
-    const action2 = removeStep('id_0', 'step_2');
+    const action2 = removeStep('step_2', 'id_0');
     const state2 = goalsById(state1, action2);
     expected = {
       id_0: {
@@ -264,7 +264,7 @@ describe('`goalsById` reducer', () => {
 
     deepFreeze(state2);
 
-    const action3 = removeStep('id_0', 'not_found');
+    const action3 = removeStep('not_found', 'id_0');
     const state3 = goalsById(state2, action3);
     expect(state3).toEqual(state2);
   });
