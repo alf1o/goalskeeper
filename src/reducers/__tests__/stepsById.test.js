@@ -1,6 +1,6 @@
-import addStep from '../../actions/addStep';
-import removeStep from '../../actions/removeStep';
-import completeStep from '../../actions/completeStep';
+import { addStep } from '../../actions/addStep';
+import { removeStep } from '../../actions/removeStep';
+import { completeStep } from '../../actions/completeStep';
 import stepsById from '../stepsById';
 import { deepFreeze, formattedDate } from '../../utils';
 
@@ -75,10 +75,10 @@ describe('`stepsByid` reducer', () => {
   });
 
   it('should handle `REMOVE_STEP`', () => {
-    const actionNotFound = removeStep('id_0', 'not_found');
+    const actionNotFound = removeStep('not_found', 'id_0');
     expect(stepsById(initialState, actionNotFound)).toEqual(initialState);
 
-    const action1 = removeStep('id_0', 'step_1');
+    const action1 = removeStep('step_1', 'id_0');
     const state1 = stepsById(initialState, action1);
     let expected = {
       step_2: {
@@ -93,7 +93,7 @@ describe('`stepsByid` reducer', () => {
 
     deepFreeze(state1);
 
-    const action2 = removeStep('id_0', 'step_2');
+    const action2 = removeStep('step_2', 'id_0');
     const state2 = stepsById(state1, action2);
     expect(state2).toEqual({});
   });
