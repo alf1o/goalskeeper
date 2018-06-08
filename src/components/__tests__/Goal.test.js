@@ -11,6 +11,7 @@ import ExpansionPanel, { ExpansionPanelSummary } from 'material-ui/ExpansionPane
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Collapse from 'material-ui/transitions/Collapse';
 import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
 import { LinearProgress } from 'material-ui/Progress';
 
 describe('Goal', () => {
@@ -45,7 +46,8 @@ describe('Goal', () => {
           goalId: 'goal_0'
         }
       ],
-      classes: { listItem: {}, linearProgress: {} }
+      classes: { listItem: {}, linearProgress: {} },
+      deleteGoal: jest.fn()
     };
     mountedGoal = undefined;
   });
@@ -73,6 +75,11 @@ describe('Goal', () => {
     it('should receive a `expanded` prop', () => {
       const expPanel = mountGoal().find(ExpansionPanel);
       expect(expPanel.props().expanded).toBeDefined();
+    });
+
+    it('should receive an `onChange` prop', () => {
+      const expPanel = mountGoal().find(ExpansionPanel);
+      expect(expPanel.props().onChange).toBeDefined();
     });
   });
 
@@ -199,6 +206,17 @@ describe('Goal', () => {
     });
   });
 
+  it('should have an `handleDelete` method', () => {
+    expect(UnwrappedGoal.prototype.handleDelete).toBeDefined();
+  });
+  describe('`handleDelete`', () => {
+    it('should dispatch a `DELETE_GOAL` action', () => {
+      mountGoal().instance().handleDelete();
+      expect(props.deleteGoal.mock.calls.length).toBe(1);
+      expect(props.deleteGoal.mock.calls[0][0]).toEqual(props.goal);
+    });
+  });
+
   describe('when `state.expanded` is `true`', () => {
     beforeEach(() => {
       mountGoal().setState({ expanded: true });
@@ -207,6 +225,11 @@ describe('Goal', () => {
     it('should pass `steps` as prop to the rendered `GoalInfo`', () => {
       const goalInfo = mountGoal().find(GoalInfo);
       expect(goalInfo.props().steps).toBeDefined();
+    });
+
+    it('should pass `handleDelete` to the `Button`', () => {
+      const btn = mountGoal().find(Button);
+      expect(btn.props().onClick).toBe(mountGoal().instance().handleDelete);
     });
   });
 
