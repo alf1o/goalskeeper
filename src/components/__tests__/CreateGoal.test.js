@@ -5,9 +5,8 @@ Enzyme.configure({ adapter: new Adapter() });
 import React from 'react';
 import { shallow } from 'enzyme';
 import { UnwrappedCreateGoal } from '../CreateGoal';
-import { FormLabel } from 'material-ui/Form';
+import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
-import Divider from 'material-ui/Divider';
 import Button from 'material-ui/Button';
 import { Redirect } from 'react-router-dom';
 
@@ -22,29 +21,35 @@ describe('CrateGoal', () => {
 
   beforeEach(() => {
     props = {
-      createGoal: jest.fn()
+      createGoal: jest.fn(),
+      classes: {
+        container: '',
+        form: '',
+        btnCreate: ''
+      }
     };
     mountedCreateGoal = undefined;
   });
 
+  it('should always render a `Paper`', () => {
+    const paper = createGoal().find(Paper);
+    expect(paper.length).toBe(1);
+  });
+  describe('the rendered `Paper`', () => {
+    it('should contain everything else', () => {
+      const paper = createGoal().find(Paper);
+      expect(paper.children()).toEqual(createGoal().children());
+    });
+  });
+
   it('should always render a `form`', () => {
-    const form = createGoal().find('form');
-    expect(form.length).toBe(1);
+    expect(createGoal().find('form').length).toBe(1);
   });
   describe('the rendered `form`', () => {
-    it('should contain everything else', () => {
-      const form = createGoal().find('form');
-      expect(form.children()).toEqual(createGoal().children());
-    });
     it('should receive an `onSubmit` prop', () => {
       const form = createGoal().find('form');
       expect(form.props().onSubmit).toBeDefined();
     });
-  });
-
-  it('should render 2 `FormLabel`s', () => {
-    const formLabels = createGoal().find(FormLabel);
-    expect(formLabels.length).toBe(2);
   });
 
   it('should have an `handleSubmit` method', () => {
@@ -82,11 +87,6 @@ describe('CrateGoal', () => {
       const textFields = createGoal().find(TextField);
       expect(textFields.every('[value]')).toBe(true);
     });
-  });
-
-  it('should render a `Divider`', () => {
-    const divider = createGoal().find(Divider);
-    expect(divider.length).toBe(1);
   });
 
   it('should render a `Button`', () => {
