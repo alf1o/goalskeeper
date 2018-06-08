@@ -1,5 +1,5 @@
-import createGoal from '../../actions/createGoal';
-import deleteGoal from '../../actions/deleteGoal';
+import { createGoal } from '../../actions/createGoal';
+import { deleteGoal } from '../../actions/deleteGoal';
 import goals from '../goals';
 import { deepFreeze } from '../../utils';
 
